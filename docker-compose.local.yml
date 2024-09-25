@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: sinabro.local.db
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "bamdoliro"  # MySQL root 사용자의 비밀번호 설정
+      MYSQL_USER: "bamdoliro"           # MySQL 일반 사용자의 이름 설정
+      MYSQL_PASSWORD: "bamdoliro"       # MySQL 일반 사용자의 비밀번호 설정
+      MYSQL_DATABASE: "sinabro"         # 생성할 데이터베이스의 이름 설정
+    ports:
+      - "3306:3306"
