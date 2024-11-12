@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: sinabro.local.db
+    image: mysql:8.0.30
+    environment:
+      MYSQL_ROOT_PASSWORD: "bamdoliro"
+      MYSQL_USER: "bamdoliro"
+      MYSQL_PASSWORD: "bamdoliro"
+      MYSQL_DATABASE: "sinabro"
+    ports:
+      - "3307:3306"
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: sinabro.local.redis
+    command: /bin/sh -c "redis-server --requirepass bamdoliro"
+    ports:
+      - "6379:6379"
