@@ -4,6 +4,7 @@ import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
 import com.bamdoliro.sinabro.shared.fixture.AuthFixture;
 import com.bamdoliro.sinabro.shared.util.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -28,6 +29,13 @@ class AuthControllerTest extends RestDocsTestSupport {
 
         given(googleAuthUseCase.execute(any(String.class))).willReturn(response);
 
-        mockMvc.perform(get("/auth/"));
+        mockMvc.perform(get("/auth/oauth2/code/google")
+                        .param("code", AuthFixture.createGoogleCode())
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+
+        .andExpect(status().isOk())
+
+        .andDo(restDocs.document());
     }
 }
