@@ -2,22 +2,22 @@ package com.bamdoliro.sinabro.presentation.auth;
 
 import com.bamdoliro.sinabro.application.auth.GoogleAuthLinkUseCase;
 import com.bamdoliro.sinabro.application.auth.GoogleAuthUseCase;
+import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
 import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
 import com.bamdoliro.sinabro.shared.response.CommonResponse;
 import com.bamdoliro.sinabro.shared.response.SingleCommonResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/auth")
 @RequiredArgsConstructor
+@RequestMapping("/auth")
+@RestController
 public class AuthController {
 
     private final GoogleAuthLinkUseCase googleAuthLinkUseCase;
     private final GoogleAuthUseCase googleAuthUseCase;
+    private final RefreshAccessTokenUseCase refreshAccessTokenUseCase;
 
     @GetMapping("/google")
     public SingleCommonResponse<String> getGoogleAuthUrl() {
@@ -33,6 +33,13 @@ public class AuthController {
     public SingleCommonResponse<TokenResponse> authGoogle(@RequestParam String code) {
         return CommonResponse.success(
                 googleAuthUseCase.execute(code)
+        );
+    }
+
+    @PostMapping("/refresh")
+    public SingleCommonResponse<TokenResponse> refreshAccessToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
+        return CommonResponse.success(
+                refreshAccessTokenUseCase.execute(refreshToken)
         );
     }
 }
