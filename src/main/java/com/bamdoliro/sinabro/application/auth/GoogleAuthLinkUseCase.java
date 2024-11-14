@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @UseCase
 @RequiredArgsConstructor
-public class GetGoogleAuthLinkUseCase {
+public class GoogleAuthLinkUseCase {
 
     private final AuthProperties authProperties;
 

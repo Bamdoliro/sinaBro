@@ -1,6 +1,6 @@
 package com.bamdoliro.sinabro.presentation.auth;
 
-import com.bamdoliro.sinabro.application.auth.GetGoogleAuthLinkUseCase;
+import com.bamdoliro.sinabro.application.auth.GoogleAuthLinkUseCase;
 import com.bamdoliro.sinabro.application.auth.GoogleAuthUseCase;
 import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
 import com.bamdoliro.sinabro.shared.response.CommonResponse;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final GetGoogleAuthLinkUseCase getGoogleAuthLinkUseCase;
+    private final GoogleAuthLinkUseCase googleAuthLinkUseCase;
     private final GoogleAuthUseCase googleAuthUseCase;
 
     @GetMapping("/google")
     public SingleCommonResponse<String> getGoogleAuthUrl() {
         return CommonResponse.success(
-                getGoogleAuthLinkUseCase.execute()
+                googleAuthLinkUseCase.execute()
         );
     }
 
