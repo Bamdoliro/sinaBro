@@ -2,6 +2,7 @@ package com.bamdoliro.sinabro.shared.util;
 
 import com.bamdoliro.sinabro.application.auth.GoogleAuthLinkUseCase;
 import com.bamdoliro.sinabro.application.auth.GoogleAuthUseCase;
+import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
 import com.bamdoliro.sinabro.presentation.auth.AuthController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
@@ -28,4 +29,7 @@ public abstract class ControllerTest {
 
     @MockBean
     protected GoogleAuthUseCase googleAuthUseCase;
+
+    @MockBean
+    protected RefreshAccessTokenUseCase refreshAccessTokenUseCase;
 }
