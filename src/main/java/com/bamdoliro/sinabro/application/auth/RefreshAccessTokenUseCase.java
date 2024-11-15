@@ -6,6 +6,7 @@ import com.bamdoliro.sinabro.domain.auth.service.TokenService;
 import com.bamdoliro.sinabro.infrastructure.persistence.auth.TokenRepository;
 import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
+import com.bamdoliro.sinabro.shared.config.properties.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +18,16 @@ public class RefreshAccessTokenUseCase {
 
     private final TokenService tokenService;
     private final TokenRepository tokenRepository;
+    private final JwtProperties jwtProperties;
 
     @Transactional(readOnly = true)
     public TokenResponse execute(String refreshToken) {
+        refreshToken = refreshToken.replace(jwtProperties.getPrefix(), "").trim();
         validate(refreshToken);
         Token token = getToken(refreshToken);
 
         return TokenResponse.builder()
-                .accessToken(token.getToken())
+                .accessToken(tokenService.generateAccessToken(token.getId()))
                 .build();
     }
 
