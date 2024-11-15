@@ -8,3 +8,7 @@
 :sectnums:
 
 include::overview.adoc[]
+
+include::auth.adoc[]
+
+include::user.adoc[]
