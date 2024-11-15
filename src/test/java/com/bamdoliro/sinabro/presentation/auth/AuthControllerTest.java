@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AuthControllerTest extends RestDocsTestSupport {
@@ -17,7 +18,7 @@ class AuthControllerTest extends RestDocsTestSupport {
     void 구글_로그인_링크를_발급받는다() throws Exception {
         given(googleAuthLinkUseCase.execute()).willReturn(AuthFixture.createGoogleOAuthLink());
 
-        mockMvc.perform(get("/auth/google"))
+        mockMvc.perform(get("/auth/google/link"))
                 .andExpect(status().isOk())
 
                 .andDo(restDocs.document());
@@ -29,8 +30,8 @@ class AuthControllerTest extends RestDocsTestSupport {
 
         given(googleAuthUseCase.execute(any(String.class))).willReturn(response);
 
-        mockMvc.perform(get("/auth/oauth2/code/google")
-                        .param("code", AuthFixture.createGoogleCode())
+        mockMvc.perform(post("/auth/google")
+                        .param("code", "this_is_code")
                         .accept(MediaType.APPLICATION_JSON)
                 )
 
