@@ -2,6 +2,7 @@ package com.bamdoliro.sinabro.application.auth;
 
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
 import com.bamdoliro.sinabro.domain.user.domain.User;
+import com.bamdoliro.sinabro.domain.user.domain.type.Authority;
 import com.bamdoliro.sinabro.infrastructure.feign.auth.google.GoogleAuthClient;
 import com.bamdoliro.sinabro.infrastructure.feign.auth.google.GoogleInformationClient;
 import com.bamdoliro.sinabro.infrastructure.feign.auth.google.dto.request.GoogleAuthRequest;
@@ -40,6 +41,7 @@ public class GoogleAuthUseCase {
                     User.builder()
                             .email(email)
                             .name(information.getName())
+                            .authority(Authority.USER)
                             .build()
             );
         }

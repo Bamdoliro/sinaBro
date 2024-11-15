@@ -1,5 +1,6 @@
 package com.bamdoliro.sinabro.domain.user.domain;
 
+import com.bamdoliro.sinabro.domain.user.domain.type.Authority;
 import com.bamdoliro.sinabro.shared.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -26,9 +27,14 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private Authority authority;
+
     @Builder
-    public User(String email, String name) {
+    public User(String email, String name, Authority authority) {
         this.email = email;
         this.name = name;
+        this.authority = authority;
     }
 }
