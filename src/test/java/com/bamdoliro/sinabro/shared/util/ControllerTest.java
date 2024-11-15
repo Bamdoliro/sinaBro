@@ -6,6 +6,7 @@ import com.bamdoliro.sinabro.application.auth.LogOutUseCase;
 import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
 import com.bamdoliro.sinabro.presentation.auth.AuthController;
+import com.bamdoliro.sinabro.presentation.user.UserController;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationArgumentResolver;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationExtractor;
 import com.bamdoliro.sinabro.shared.config.properties.JwtProperties;
@@ -19,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @Disabled
 @WebMvcTest({
         AuthController.class,
-//        UserController.class
+        UserController.class
 })
 public abstract class ControllerTest {
 
