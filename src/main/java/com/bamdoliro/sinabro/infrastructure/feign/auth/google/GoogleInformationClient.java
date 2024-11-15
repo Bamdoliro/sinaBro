@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface GoogleInformationClient {
 
     @GetMapping("?alt=json")
-    public GoogleInformationResponse getUserInformation(@RequestHeader("Authorization") String accessToken);
+    GoogleInformationResponse getUserInformation(@RequestHeader("Authorization") String accessToken);
 }

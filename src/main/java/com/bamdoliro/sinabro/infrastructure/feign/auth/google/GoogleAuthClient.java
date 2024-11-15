@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface GoogleAuthClient {
 
     @PostMapping
-    public GoogleTokenResponse getAccessToken(GoogleAuthRequest request);
+    GoogleTokenResponse getAccessToken(GoogleAuthRequest request);
 }
