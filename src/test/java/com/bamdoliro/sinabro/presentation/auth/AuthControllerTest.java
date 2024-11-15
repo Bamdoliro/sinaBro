@@ -1,14 +1,26 @@
 package com.bamdoliro.sinabro.presentation.auth;
 
+import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
 import com.bamdoliro.sinabro.shared.fixture.AuthFixture;
+import com.bamdoliro.sinabro.shared.fixture.UserFixture;
 import com.bamdoliro.sinabro.shared.util.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.headers.HeaderDocumentation;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,6 +34,8 @@ class AuthControllerTest extends RestDocsTestSupport {
                 .andExpect(status().isOk())
 
                 .andDo(restDocs.document());
+
+        verify(googleAuthLinkUseCase, times(1)).execute();
     }
 
     @Test
@@ -31,12 +45,67 @@ class AuthControllerTest extends RestDocsTestSupport {
         given(googleAuthUseCase.execute(any(String.class))).willReturn(response);
 
         mockMvc.perform(post("/auth/google")
-                        .param("code", "this_is_code")
+                        .param("code", AuthFixture.createGoogleOAuthCode())
                         .accept(MediaType.APPLICATION_JSON)
                 )
 
         .andExpect(status().isOk())
 
         .andDo(restDocs.document());
+
+        verify(googleAuthUseCase, times(1)).execute(any(String.class));
+    }
+
+    @Test
+    void 리프레시_토큰으로_액세스_토큰을_재발급한다() throws Exception {
+        String refreshToken = "Bearer " + AuthFixture.createRefreshTokenString();
+        TokenResponse response = TokenResponse.builder()
+                .accessToken(AuthFixture.createAccessTokenString())
+                .build();
+
+        given(refreshAccessTokenUseCase.execute(refreshToken)).willReturn(response);
+
+        mockMvc.perform(post("/auth/refresh")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, refreshToken)
+        )
+
+                .andExpect(status().isOk())
+
+                .andDo(restDocs.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION)
+                                        .description("Refresh Token")
+                        )
+                ));
+
+        verify(refreshAccessTokenUseCase, times(1)).execute(refreshToken);
+    }
+
+    @Test
+    void 유저가_로그아웃한다() throws Exception {
+        User user = UserFixture.createUser();
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willDoNothing().given(logOutUseCase).execute(user);
+
+        mockMvc.perform(delete("/auth")
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                .andExpect(status().isNoContent())
+
+                .andDo(restDocs.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION)
+                                        .description("Bearer token")
+                        )
+                ));
+
+        verify(logOutUseCase, times(1)).execute(user);
     }
 }

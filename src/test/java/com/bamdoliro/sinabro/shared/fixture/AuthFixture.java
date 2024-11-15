@@ -8,7 +8,7 @@ public class AuthFixture {
         return "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount";
     }
 
-    public static String createGoogleCode() {
+    public static String createGoogleOAuthCode() {
         return "this_is_code";
     }
 
@@ -35,6 +35,6 @@ public class AuthFixture {
     }
 
     public static String createAuthHeader() {
-        return "Bearer it's.access.token";
+        return "Bearer sinabro.access.token";
     }
 }
