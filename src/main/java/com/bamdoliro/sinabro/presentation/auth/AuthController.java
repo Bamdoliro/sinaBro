@@ -4,11 +4,14 @@ import com.bamdoliro.sinabro.application.auth.GoogleAuthLinkUseCase;
 import com.bamdoliro.sinabro.application.auth.GoogleAuthUseCase;
 import com.bamdoliro.sinabro.application.auth.LogOutUseCase;
 import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
+import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
+import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
 import com.bamdoliro.sinabro.shared.response.CommonResponse;
 import com.bamdoliro.sinabro.shared.response.SingleCommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -40,5 +43,13 @@ public class AuthController {
         return CommonResponse.success(
                 refreshAccessTokenUseCase.execute(refreshToken)
         );
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping
+    public void logOut(
+            @AuthenticationPrincipal User user
+    ) {
+        logOutUseCase.execute(user);
     }
 }
