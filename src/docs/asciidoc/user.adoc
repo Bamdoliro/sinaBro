@@ -6,12 +6,12 @@
 ==== 요청 형식
 
 ===== Request Header
-include::{snippets}/user-controller-test/로그인한_유저를_불러온다/request-headers.adoc[]
+include::{snippets}/user-controller-test/로그인한_유저의_정보를_불러온다/request-headers.adoc[]
 
 ==== 요청
-include::{snippets}/user-controller-test/로그인한_유저를_불러온다/http-request.adoc[]
+include::{snippets}/user-controller-test/로그인한_유저의_정보를_불러온다/http-request.adoc[]
 
 ==== 응답
 
 ===== 정상 응답
-include::{snippets}/user-controller-test/로그인한_유저를_불러온다/http-response.adoc[]
+include::{snippets}/user-controller-test/로그인한_유저의_정보를_불러온다/http-response.adoc[]
