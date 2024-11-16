@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.headers.HeaderDocumentation;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.request.RequestDocumentation;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -18,10 +19,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AuthControllerTest extends RestDocsTestSupport {
@@ -44,15 +42,19 @@ class AuthControllerTest extends RestDocsTestSupport {
 
         given(googleAuthUseCase.execute(any(String.class))).willReturn(response);
 
-        mockMvc.perform(post("/auth/google")
-                        .param("code", AuthFixture.createGoogleOAuthCode())
-                        .accept(MediaType.APPLICATION_JSON)
-                )
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/auth/google")
+                .queryParam("code", AuthFixture.createGoogleOAuthCode())
+                .accept(MediaType.APPLICATION_JSON)
+        )
 
-        .andExpect(status().isOk())
+                .andExpect(status().isOk())
 
-        .andDo(restDocs.document());
-
+                .andDo(restDocs.document(
+                        RequestDocumentation.queryParameters(
+                                RequestDocumentation.parameterWithName("code")
+                                        .description("Google OAuth 인증 코드. 리다이렉트시 url에 포함됨")
+                        )
+                ));
         verify(googleAuthUseCase, times(1)).execute(any(String.class));
     }
 
