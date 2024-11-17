@@ -10,6 +10,7 @@ import com.bamdoliro.sinabro.presentation.user.UserController;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationArgumentResolver;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationExtractor;
 import com.bamdoliro.sinabro.shared.config.properties.JwtProperties;
+import com.bamdoliro.sinabro.shared.response.SharedController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @Disabled
 @WebMvcTest({
         AuthController.class,
-        UserController.class
+        UserController.class,
+        SharedController.class
 })
 public abstract class ControllerTest {
 
