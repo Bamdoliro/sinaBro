@@ -12,3 +12,5 @@ include::overview.adoc[]
 include::auth.adoc[]
 
 include::user.adoc[]
+
+include::enum.adoc[]
