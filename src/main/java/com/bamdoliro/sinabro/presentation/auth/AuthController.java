@@ -26,21 +26,21 @@ public class AuthController {
 
     @GetMapping("/google/link")
     public SingleCommonResponse<String> getGoogleAuthUrl() {
-        return CommonResponse.success(
+        return CommonResponse.ok(
                 googleAuthLinkUseCase.execute()
         );
     }
 
     @PostMapping("/google")
     public SingleCommonResponse<TokenResponse> authWithGoogle(@RequestParam String code) {
-        return CommonResponse.success(
+        return CommonResponse.ok(
                 googleAuthUseCase.execute(code)
         );
     }
 
     @PostMapping("/refresh")
     public SingleCommonResponse<TokenResponse> refreshAccessToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
-        return CommonResponse.success(
+        return CommonResponse.ok(
                 refreshAccessTokenUseCase.execute(refreshToken)
         );
     }

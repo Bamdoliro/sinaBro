@@ -1,7 +1,7 @@
 package com.bamdoliro.sinabro.shared.response;
 
 import com.bamdoliro.sinabro.domain.user.domain.type.Authority;
-import com.bamdoliro.sinabro.shared.property.EnumProperty;
+import com.bamdoliro.sinabro.shared.enumeration.EnumProperty;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
