@@ -1,0 +1,15 @@
+== 캐릭터 Character
+
+=== 캐릭터 선택
+사용자는 캐릭터를 선택할 수 있습니다.
+
+==== 요청 형식
+include::{snippets}/character-controller-test/유저가_캐릭터를_선택한다/request-fields.adoc[]
+
+==== 요청
+include::{snippets}/character-controller-test/유저가_캐릭터를_선택한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/character-controller-test/유저가_캐릭터를_선택한다/http-response.adoc[]
