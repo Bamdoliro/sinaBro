@@ -1,5 +1,6 @@
 package com.bamdoliro.sinabro.shared.response;
 
+import com.bamdoliro.sinabro.domain.character.domain.type.CharacterType;
 import com.bamdoliro.sinabro.domain.user.domain.type.Authority;
 import com.bamdoliro.sinabro.shared.property.EnumProperty;
 import jakarta.annotation.security.PermitAll;
@@ -20,6 +21,7 @@ public class SharedController {
     public EnumDocs findEnums() {
         return EnumDocs.builder()
                 .authority(getDocs(Authority.values()))
+                .characterType(getDocs(CharacterType.values()))
                 .build();
     }
 

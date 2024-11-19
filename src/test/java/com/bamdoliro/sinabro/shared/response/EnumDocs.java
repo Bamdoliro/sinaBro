@@ -14,4 +14,5 @@ import java.util.Map;
 public class EnumDocs {
 
     Map<String, String> authority;
+    Map<String, String> characterType;
 }
