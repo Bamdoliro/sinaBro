@@ -1,6 +1,6 @@
 package com.bamdoliro.sinabro.domain.user.domain.type;
 
-import com.bamdoliro.sinabro.shared.property.EnumProperty;
+import com.bamdoliro.sinabro.shared.enumeration.EnumProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
