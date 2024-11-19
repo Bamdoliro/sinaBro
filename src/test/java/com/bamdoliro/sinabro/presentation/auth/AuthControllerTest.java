@@ -1,0 +1,113 @@
+package com.bamdoliro.sinabro.presentation.auth;
+
+import com.bamdoliro.sinabro.domain.user.domain.User;
+import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
+import com.bamdoliro.sinabro.shared.fixture.AuthFixture;
+import com.bamdoliro.sinabro.shared.fixture.UserFixture;
+import com.bamdoliro.sinabro.shared.util.RestDocsTestSupport;
+import org.junit.jupiter.api.Test;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.request.RequestDocumentation;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+class AuthControllerTest extends RestDocsTestSupport {
+
+    @Test
+    void 구글_로그인_링크를_발급받는다() throws Exception {
+        given(googleAuthLinkUseCase.execute()).willReturn(AuthFixture.createGoogleOAuthLink());
+
+        mockMvc.perform(get("/auth/google/link"))
+                .andExpect(status().isOk())
+
+                .andDo(restDocs.document());
+
+        verify(googleAuthLinkUseCase, times(1)).execute();
+    }
+
+    @Test
+    void 유저가_구글로_로그인한다() throws Exception {
+        TokenResponse response = new TokenResponse(AuthFixture.createAccessTokenString(), AuthFixture.createRefreshTokenString());
+
+        given(googleAuthUseCase.execute(any(String.class))).willReturn(response);
+
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/auth/google")
+                .queryParam("code", AuthFixture.createGoogleOAuthCode())
+                .accept(MediaType.APPLICATION_JSON)
+        )
+
+                .andExpect(status().isOk())
+
+                .andDo(restDocs.document(
+                        RequestDocumentation.queryParameters(
+                                RequestDocumentation.parameterWithName("code")
+                                        .description("Google OAuth 인증 코드. 리다이렉트시 url에 포함됨")
+                        )
+                ));
+        verify(googleAuthUseCase, times(1)).execute(any(String.class));
+    }
+
+    @Test
+    void 리프레시_토큰으로_액세스_토큰을_재발급한다() throws Exception {
+        String refreshToken = "Bearer " + AuthFixture.createRefreshTokenString();
+        TokenResponse response = TokenResponse.builder()
+                .accessToken(AuthFixture.createAccessTokenString())
+                .build();
+
+        given(refreshAccessTokenUseCase.execute(refreshToken)).willReturn(response);
+
+        mockMvc.perform(post("/auth/refresh")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, refreshToken)
+        )
+
+                .andExpect(status().isOk())
+
+                .andDo(restDocs.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION)
+                                        .description("Refresh Token")
+                        )
+                ));
+
+        verify(refreshAccessTokenUseCase, times(1)).execute(refreshToken);
+    }
+
+    @Test
+    void 유저가_로그아웃한다() throws Exception {
+        User user = UserFixture.createUser();
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willDoNothing().given(logOutUseCase).execute(user);
+
+        mockMvc.perform(delete("/auth")
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                .andExpect(status().isNoContent())
+
+                .andDo(restDocs.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION)
+                                        .description("Bearer token")
+                        )
+                ));
+
+        verify(logOutUseCase, times(1)).execute(user);
+    }
+}

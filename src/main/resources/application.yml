@@ -18,3 +18,22 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+
+auth:
+  google:
+    base-url: ${GOOGLE_BASE_URL}
+    client-id: ${GOOGLE_CLIENT_ID}
+    client-secret: ${GOOGLE_CLIENT_SECRET}
+    redirect-uri: ${GOOGLE_REDIRECT_URI}
+
+jwt:
+  refresh-expiration-time: 1296000000 # 15일
+  access-expiration-time: 3600000 # 1시간
+  prefix: Bearer
+  secret-key: ${JWT_SECRET}

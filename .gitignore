@@ -1,3 +1,5 @@
+.env
+generated/
 HELP.md
 .gradle
 build/
