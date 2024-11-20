@@ -1,4 +1,4 @@
-package com.bamdoliro.sinabro.shared.property;
+package com.bamdoliro.sinabro.shared.enumeration;
 
 public interface EnumProperty {
 

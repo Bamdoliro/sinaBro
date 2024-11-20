@@ -9,6 +9,8 @@
 
 include::overview.adoc[]
 
+include::shared.adoc[]
+
 include::auth.adoc[]
 
 include::user.adoc[]
