@@ -1,6 +1,8 @@
 package com.bamdoliro.sinabro.shared.response;
 
+import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.domain.user.domain.type.Authority;
+import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
 import com.bamdoliro.sinabro.shared.enumeration.EnumProperty;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,5 +28,12 @@ public class SharedController {
     private Map<String, String> getDocs(EnumProperty[] properties) {
         return Arrays.stream(properties)
                 .collect(Collectors.toMap(EnumProperty::name, EnumProperty::getDescription));
+    }
+
+    @GetMapping("/jwt")
+    public SingleCommonResponse<String> jwt(
+            @AuthenticationPrincipal User user
+    ) {
+        return CommonResponse.ok("success");
     }
 }

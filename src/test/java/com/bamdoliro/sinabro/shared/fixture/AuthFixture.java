@@ -13,24 +13,28 @@ public class AuthFixture {
     }
 
     public static String createAccessTokenString() {
-        return "new.access.token";
+        return "sinabro.access.token";
     }
 
     public static String createRefreshTokenString() {
-        return "new.refresh.token";
+        return "sinabro.refresh.token";
+    }
+
+    public static String createWeirdTokenString() {
+        return "sinabro.weird.token";
     }
 
     public static Token createAccessToken() {
         return Token.builder()
                 .id("bamdoliro@gmail.com")
-                .token("new.access.token")
+                .token("sinabro.access.token")
                 .build();
     }
 
     public static Token createRefreshToken() {
         return Token.builder()
                 .id("bamdoliro@gmail.com")
-                .token("new.access.token")
+                .token("sinabro.access.token")
                 .build();
     }
 
