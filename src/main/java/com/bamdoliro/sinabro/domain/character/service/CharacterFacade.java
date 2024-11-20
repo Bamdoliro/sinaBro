@@ -1,6 +1,7 @@
 package com.bamdoliro.sinabro.domain.character.service;
 
 import com.bamdoliro.sinabro.domain.character.domain.Character;
+import com.bamdoliro.sinabro.domain.character.exception.CharacterNotFoundException;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.persistence.character.CharacterRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,6 @@ public class CharacterFacade {
     @Transactional(readOnly = true)
     public Character getCharacter(User user) {
         return characterRepository.findByUser(user)
-                .orElseThrow();
+                .orElseThrow(CharacterNotFoundException::new);
     }
 }

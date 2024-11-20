@@ -1,6 +1,7 @@
 package com.bamdoliro.sinabro.application.character;
 
 import com.bamdoliro.sinabro.domain.character.domain.Character;
+import com.bamdoliro.sinabro.domain.character.exception.CharacterAlreadySelectedException;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.persistence.character.CharacterRepository;
 import com.bamdoliro.sinabro.presentation.character.dto.request.SelectCharacterRequest;
@@ -18,7 +19,7 @@ public class SelectCharacterUseCase {
 
     @Transactional
     public void execute(User user, SelectCharacterRequest request) {
-        validateOnlyOneCharacterPerUser(user);
+        validate(user);
 
         Character character = Character.builder()
                 .type(request.getType())
@@ -28,10 +29,10 @@ public class SelectCharacterUseCase {
         characterRepository.save(character);
     }
 
-    private void validateOnlyOneCharacterPerUser(User user) {
+    private void validate(User user) {
         Optional<Character> character = characterRepository.findByUser(user);
         if (character.isPresent()) {
-            throw new IllegalArgumentException("이미 캐릭터가 존재합니다.");
+            throw new CharacterAlreadySelectedException();
         }
     }
 }

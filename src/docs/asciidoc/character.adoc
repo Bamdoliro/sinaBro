@@ -13,3 +13,6 @@ include::{snippets}/character-controller-test/유저가_캐릭터를_선택한�
 
 ===== 정상 응답
 include::{snippets}/character-controller-test/유저가_캐릭터를_선택한다/http-response.adoc[]
+
+===== 캐릭터를 중복 선택할 경우
+include::{snippets}/character-controller-test/유저가_캐릭터를_다시_선택하면_에러가_발생한다/http-response.adoc[]
