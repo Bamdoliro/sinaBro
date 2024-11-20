@@ -28,3 +28,19 @@ include::{snippets}/auth-controller-test/유저가_구글로_로그인한다/htt
 
 ===== 정상 응답
 include::{snippets}/auth-controller-test/유저가_구글로_로그인한다/http-response.adoc[]
+
+=== 액세스 토큰 재발급
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/auth-controller-test/리프레시_토큰으로_액세스_토큰을_재발급한다/request-headers.adoc[]
+
+==== 요청
+include::{snippets}/auth-controller-test/리프레시_토큰으로_액세스_토큰을_재발급한다/http-request.adoc[]
+
+===== 정상 응답
+include::{snippets}/auth-controller-test/리프레시_토큰으로_액세스_토큰을_재발급한다/http-response.adoc[]
+
+==== 액세스 토큰으로 요청한 경우
+include::{snippets}/auth-controller-test/액세스_토큰으로_액세스_토큰을_재발급하면_예외가_발생한다/http-response.adoc[]
