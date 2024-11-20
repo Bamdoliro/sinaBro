@@ -2,11 +2,14 @@ package com.bamdoliro.sinabro.domain.auth.service;
 
 import com.bamdoliro.sinabro.domain.auth.domain.Token;
 import com.bamdoliro.sinabro.domain.auth.domain.type.TokenType;
+import com.bamdoliro.sinabro.domain.auth.exception.ExpiredTokenException;
+import com.bamdoliro.sinabro.domain.auth.exception.InvalidTokenException;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.domain.user.service.UserFacade;
 import com.bamdoliro.sinabro.infrastructure.persistence.auth.TokenRepository;
 import com.bamdoliro.sinabro.shared.config.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -76,8 +79,10 @@ public class TokenService {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredTokenException();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new InvalidTokenException();
         }
     }
 
