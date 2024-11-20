@@ -1,5 +1,6 @@
 package com.bamdoliro.sinabro.presentation.auth;
 
+import com.bamdoliro.sinabro.domain.auth.exception.InvalidTokenException;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
 import com.bamdoliro.sinabro.shared.fixture.AuthFixture;
@@ -83,6 +84,25 @@ class AuthControllerTest extends RestDocsTestSupport {
                 ));
 
         verify(refreshAccessTokenUseCase, times(1)).execute(refreshToken);
+    }
+
+    @Test
+    void 액세스_토큰으로_액세스_토큰을_재발급하면_예외가_발생한다() throws Exception {
+        String accessToken = AuthFixture.createAccessTokenString();
+
+        given(refreshAccessTokenUseCase.execute(accessToken)).willThrow(new InvalidTokenException());
+
+        mockMvc.perform(post("/auth/refresh")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                )
+
+                .andExpect(status().isUnauthorized())
+
+                .andDo(restDocs.document());
+
+        verify(refreshAccessTokenUseCase, times(1)).execute(accessToken);
     }
 
     @Test

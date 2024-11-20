@@ -11,7 +11,7 @@ public class CommonResponse {
     String code;
     String message;
 
-    public static <T> SingleCommonResponse<T> success(T data) {
+    public static <T> SingleCommonResponse<T> ok(T data) {
         return new SingleCommonResponse<>(
                 "OK",
                 "ok",
@@ -19,7 +19,7 @@ public class CommonResponse {
         );
     }
 
-    public static <T> ListCommonResponse<T> success(List<T> dataList) {
+    public static <T> ListCommonResponse<T> ok(List<T> dataList) {
         return new ListCommonResponse<>(
                 "OK",
                 "ok",

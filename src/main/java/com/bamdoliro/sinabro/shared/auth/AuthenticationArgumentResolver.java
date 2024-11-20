@@ -1,5 +1,6 @@
 package com.bamdoliro.sinabro.shared.auth;
 
+import com.bamdoliro.sinabro.domain.auth.exception.AuthorityMismatchException;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import lombok.NonNull;
@@ -39,7 +40,7 @@ public class AuthenticationArgumentResolver implements HandlerMethodArgumentReso
                 !authenticationPrincipal.authority().equals(Authority.ALL) &&
                 !user.getAuthority().name().equals(authenticationPrincipal.authority().name())
         ) {
-            throw new IllegalArgumentException();
+            throw new AuthorityMismatchException();
         }
     }
 }

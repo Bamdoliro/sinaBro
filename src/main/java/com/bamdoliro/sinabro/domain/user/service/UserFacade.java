@@ -1,6 +1,7 @@
 package com.bamdoliro.sinabro.domain.user.service;
 
 import com.bamdoliro.sinabro.domain.user.domain.User;
+import com.bamdoliro.sinabro.domain.user.exception.UserNotFoundException;
 import com.bamdoliro.sinabro.infrastructure.persistence.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,6 @@ public class UserFacade {
     @Transactional(readOnly = true)
     public User getUser(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow();
+                .orElseThrow(UserNotFoundException::new);
     }
 }
