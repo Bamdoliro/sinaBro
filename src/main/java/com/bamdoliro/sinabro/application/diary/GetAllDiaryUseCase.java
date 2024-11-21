@@ -20,16 +20,12 @@ public class GetAllDiaryUseCase {
         List<Diary> diaryList;
         if (startDate != null && endDate != null) {
             diaryList = diaryRepository.findAllByAuthorAndCreatedAtBetween(user, startDate, endDate);
-            System.out.println("between");
         } else if (startDate != null) {
             diaryList = diaryRepository.findAllByAuthorAndCreatedAtAfter(user, startDate);
-            System.out.println("after");
         } else if (endDate != null) {
             diaryList = diaryRepository.findAllByAuthorAndCreatedAtBefore(user, endDate);
-            System.out.println("before");
         } else {
             diaryList = diaryRepository.findAllByAuthor(user);
-            System.out.println("all");
         }
 
          return diaryList.stream()
