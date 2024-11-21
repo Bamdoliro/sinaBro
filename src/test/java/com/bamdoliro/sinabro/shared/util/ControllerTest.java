@@ -4,13 +4,18 @@ import com.bamdoliro.sinabro.application.auth.GoogleAuthLinkUseCase;
 import com.bamdoliro.sinabro.application.auth.GoogleAuthUseCase;
 import com.bamdoliro.sinabro.application.auth.LogOutUseCase;
 import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
+import com.bamdoliro.sinabro.application.fcm.token.SaveFCMTokenUseCase;
+import com.bamdoliro.sinabro.application.notification.SendNotificationUseCase;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
+import com.bamdoliro.sinabro.infrastructure.fcm.FCMService;
 import com.bamdoliro.sinabro.presentation.auth.AuthController;
+import com.bamdoliro.sinabro.presentation.notification.NotificationController;
 import com.bamdoliro.sinabro.presentation.user.UserController;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationArgumentResolver;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationExtractor;
 import com.bamdoliro.sinabro.shared.config.properties.JwtProperties;
 import com.bamdoliro.sinabro.shared.response.SharedController;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +27,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest({
         AuthController.class,
         UserController.class,
-        SharedController.class
+        SharedController.class,
+        NotificationController.class
 })
 public abstract class ControllerTest {
 
@@ -46,10 +52,16 @@ public abstract class ControllerTest {
     @MockBean
     protected LogOutUseCase logOutUseCase;
 
+    @MockBean
+    protected SendNotificationUseCase sendNotificationUseCase;
+
+    @MockBean
+    protected SaveFCMTokenUseCase saveFCMTokenUseCase;
 
     // Service
     @MockBean
     protected TokenService tokenService;
+
 
     // Shared
     @MockBean
@@ -60,4 +72,8 @@ public abstract class ControllerTest {
 
     @MockBean
     protected AuthenticationExtractor authenticationExtractor;
+
+    protected String toJson(Object object) throws JsonProcessingException, JsonProcessingException {
+        return objectMapper.writeValueAsString(object);
+    }
 }
