@@ -21,7 +21,7 @@ public class Diary extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT", length = 5000)
     private String content;
 
     @ElementCollection(fetch = FetchType.LAZY)
