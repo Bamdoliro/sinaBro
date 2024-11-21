@@ -1,5 +1,6 @@
 package com.bamdoliro.sinabro.shared.response;
 
+import com.bamdoliro.sinabro.domain.diary.domain.type.Emotion;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.domain.user.domain.type.Authority;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
@@ -22,6 +23,8 @@ public class SharedController {
     public EnumDocs findEnums() {
         return EnumDocs.builder()
                 .authority(getDocs(Authority.values()))
+                .emotion(getDocs(Emotion.values()))
+                .emotionCategory(getDocs(Emotion.Category.values()))
                 .build();
     }
 
