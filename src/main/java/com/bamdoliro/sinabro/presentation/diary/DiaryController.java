@@ -1,12 +1,9 @@
 package com.bamdoliro.sinabro.presentation.diary;
 
-import com.bamdoliro.sinabro.application.diary.CreateDiaryUseCase;
-import com.bamdoliro.sinabro.application.diary.DeleteDiaryUseCase;
-import com.bamdoliro.sinabro.application.diary.GetAllDiaryUseCase;
-import com.bamdoliro.sinabro.application.diary.UpdateDiaryUseCase;
+import com.bamdoliro.sinabro.application.diary.*;
 import com.bamdoliro.sinabro.domain.user.domain.User;
-import com.bamdoliro.sinabro.infrastructure.persistence.diary.DiaryRepository;
 import com.bamdoliro.sinabro.presentation.diary.dto.request.DiaryRequest;
+import com.bamdoliro.sinabro.presentation.diary.dto.response.DiaryResponse;
 import com.bamdoliro.sinabro.presentation.diary.dto.response.SimpleDiaryResponse;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
 import com.bamdoliro.sinabro.shared.response.IdResponse;
@@ -28,7 +25,7 @@ public class DiaryController {
     private final UpdateDiaryUseCase updateDiaryUseCase;
     private final DeleteDiaryUseCase deleteDiaryUseCase;
     private final GetAllDiaryUseCase getAllDiaryUseCase;
-    private final DiaryRepository diaryRepository;
+    private final GetDiaryUseCase getDiaryUseCase;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -49,6 +46,16 @@ public class DiaryController {
     ) {
         return ListCommonResponse.ok(
             getAllDiaryUseCase.execute(user, startDate, endDate)
+        );
+    }
+
+    @GetMapping("/{diary-id}")
+    public SingleCommonResponse<DiaryResponse> getDiary(
+            @AuthenticationPrincipal User user,
+            @PathVariable(name = "diary-id") Long diaryId
+    ) {
+        return SingleCommonResponse.ok(
+                getDiaryUseCase.execute(user, diaryId)
         );
     }
 
