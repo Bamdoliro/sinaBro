@@ -7,8 +7,8 @@ import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
 import com.bamdoliro.sinabro.application.fcm.token.SaveFCMTokenUseCase;
 import com.bamdoliro.sinabro.application.notification.SendNotificationUseCase;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
-import com.bamdoliro.sinabro.infrastructure.fcm.FCMService;
 import com.bamdoliro.sinabro.presentation.auth.AuthController;
+import com.bamdoliro.sinabro.presentation.fcm.token.dto.FCMTokenController;
 import com.bamdoliro.sinabro.presentation.notification.NotificationController;
 import com.bamdoliro.sinabro.presentation.user.UserController;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationArgumentResolver;
@@ -28,7 +28,8 @@ import org.springframework.test.web.servlet.MockMvc;
         AuthController.class,
         UserController.class,
         SharedController.class,
-        NotificationController.class
+        NotificationController.class,
+        FCMTokenController.class
 })
 public abstract class ControllerTest {
 
