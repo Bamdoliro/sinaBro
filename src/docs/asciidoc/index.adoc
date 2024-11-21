@@ -15,4 +15,8 @@ include::auth.adoc[]
 
 include::user.adoc[]
 
+include::fcm-token.adoc[]
+
+include::notification.adoc[]
+
 include::enum.adoc[]
