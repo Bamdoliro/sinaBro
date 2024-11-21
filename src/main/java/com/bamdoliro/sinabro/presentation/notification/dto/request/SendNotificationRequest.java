@@ -4,7 +4,7 @@ import lombok.*;
 
 @Getter
 @ToString
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class SendNotificationRequest {
 
     private String title;
