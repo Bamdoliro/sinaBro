@@ -4,6 +4,7 @@ import com.bamdoliro.sinabro.application.auth.GoogleAuthLinkUseCase;
 import com.bamdoliro.sinabro.application.auth.GoogleAuthUseCase;
 import com.bamdoliro.sinabro.application.auth.LogOutUseCase;
 import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
+import com.bamdoliro.sinabro.application.fcm.token.DeleteFCMTokenUseCase;
 import com.bamdoliro.sinabro.application.fcm.token.SaveFCMTokenUseCase;
 import com.bamdoliro.sinabro.application.notification.SendNotificationUseCase;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
@@ -58,6 +59,9 @@ public abstract class ControllerTest {
 
     @MockBean
     protected SaveFCMTokenUseCase saveFCMTokenUseCase;
+
+    @MockBean
+    protected DeleteFCMTokenUseCase deleteFCMTokenUseCase;
 
     // Service
     @MockBean
