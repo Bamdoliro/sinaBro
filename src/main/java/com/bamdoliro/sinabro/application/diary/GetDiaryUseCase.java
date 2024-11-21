@@ -15,7 +15,7 @@ public class GetDiaryUseCase {
 
     private final DiaryFacade diaryFacade;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public DiaryResponse execute(User user, Long id) {
         Diary diary = diaryFacade.getDiary(id);
         validate(user, diary);

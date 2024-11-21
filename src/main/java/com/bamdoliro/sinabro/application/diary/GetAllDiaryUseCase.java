@@ -17,7 +17,7 @@ public class GetAllDiaryUseCase {
 
     private final DiaryRepository diaryRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ListDiaryResponse> execute(User user, LocalDate startDate, LocalDate endDate) {
         List<Diary> diaryList;
         if (startDate != null && endDate != null) {
