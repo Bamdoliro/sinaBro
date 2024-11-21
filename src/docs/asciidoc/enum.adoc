@@ -8,3 +8,6 @@ include::{snippets}/enum-controller-test/enums/custom-response-fields-emotion.ad
 
 [[emotionCategory]]
 include::{snippets}/enum-controller-test/enums/custom-response-fields-emotionCategory.adoc[]
+
+[[character-type]]
+include::{snippets}/enum-controller-test/enums/custom-response-fields-characterType.adoc[]

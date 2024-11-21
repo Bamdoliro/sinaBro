@@ -16,4 +16,5 @@ public class EnumDocs {
     Map<String, String> authority;
     Map<String, String> emotion;
     Map<String, String> emotionCategory;
+    Map<String, String> characterType;
 }
