@@ -31,7 +31,6 @@ public class Character extends BaseTimeEntity {
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
-    @Builder
     public Character(CharacterType type, User user) {
         this.type = type;
         this.friendship = 0;

@@ -21,17 +21,13 @@ public class SelectCharacterUseCase {
     public void execute(User user, SelectCharacterRequest request) {
         validate(user);
 
-        Character character = Character.builder()
-                .type(request.getType())
-                .user(user)
-                .build();
+        Character character = new Character(request.getType(), user);
 
         characterRepository.save(character);
     }
 
     private void validate(User user) {
-        Optional<Character> character = characterRepository.findByUser(user);
-        if (character.isPresent()) {
+        if (characterRepository.existsByUser(user)) {
             throw new CharacterAlreadySelectedException();
         }
     }
