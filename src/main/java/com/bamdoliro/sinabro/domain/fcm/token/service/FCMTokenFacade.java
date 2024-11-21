@@ -1,6 +1,7 @@
 package com.bamdoliro.sinabro.domain.fcm.token.service;
 
 import com.bamdoliro.sinabro.domain.fcm.token.domain.FCMToken;
+import com.bamdoliro.sinabro.domain.fcm.token.exception.FCMTokenNotFoundException;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.persistence.fcm.token.FCMTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,11 @@ public class FCMTokenFacade {
 
     @Transactional(readOnly = true)
     public List<FCMToken> getAllToken(User user) {
-        return fcmTokenRepository.findAllByUser(user);
+        List<FCMToken> tokens = fcmTokenRepository.findAllByUser(user);
+        if(tokens.isEmpty()) {
+            throw new FCMTokenNotFoundException();
+        }
+
+        return tokens;
     }
 }
