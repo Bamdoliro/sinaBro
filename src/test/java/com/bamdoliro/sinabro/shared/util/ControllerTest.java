@@ -6,6 +6,7 @@ import com.bamdoliro.sinabro.application.auth.LogOutUseCase;
 import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
 import com.bamdoliro.sinabro.application.fcm.token.DeleteFCMTokenUseCase;
 import com.bamdoliro.sinabro.application.fcm.token.SaveFCMTokenUseCase;
+import com.bamdoliro.sinabro.application.notification.QueryNotificationListUseCase;
 import com.bamdoliro.sinabro.application.notification.SendNotificationUseCase;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
 import com.bamdoliro.sinabro.presentation.auth.AuthController;
@@ -56,6 +57,9 @@ public abstract class ControllerTest {
 
     @MockBean
     protected SendNotificationUseCase sendNotificationUseCase;
+
+    @MockBean
+    protected QueryNotificationListUseCase queryNotificationListUseCase;
 
     @MockBean
     protected SaveFCMTokenUseCase saveFCMTokenUseCase;

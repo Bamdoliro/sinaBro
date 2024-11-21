@@ -4,17 +4,23 @@ import com.bamdoliro.sinabro.domain.fcm.token.exception.FCMTokenNotFoundExceptio
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.fcm.exception.FailedToSendException;
 import com.bamdoliro.sinabro.presentation.notification.dto.request.SendNotificationRequest;
+import com.bamdoliro.sinabro.presentation.notification.dto.response.ListNotificationResponse;
 import com.bamdoliro.sinabro.shared.fixture.AuthFixture;
+import com.bamdoliro.sinabro.shared.fixture.NotificationFixture;
 import com.bamdoliro.sinabro.shared.fixture.UserFixture;
+import com.bamdoliro.sinabro.shared.response.ListCommonResponse;
 import com.bamdoliro.sinabro.shared.util.RestDocsTestSupport;
 import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 
+import java.util.List;
+
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -99,5 +105,36 @@ public class NotificationControllerTest extends RestDocsTestSupport {
                 .andDo(restDocs.document());
 
         verify(sendNotificationUseCase, times(1)).execute(any(User.class), any(SendNotificationRequest.class));
+    }
+
+    @Test
+    void 전체_알림을_불러온다() throws Exception {
+        User user = UserFixture.createUser();
+        List<ListNotificationResponse> response = List.of(
+                NotificationFixture.createListNotificationResponse(),
+                NotificationFixture.createListNotificationResponse(),
+                NotificationFixture.createListNotificationResponse()
+        );
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        given(queryNotificationListUseCase.execute(user)).willReturn(response);
+
+        mockMvc.perform(get("/notifications")
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                .andExpect(status().isOk())
+
+                .andDo(restDocs.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION)
+                                        .description("Bearer token")
+                        )
+                ));
+
+        verify(queryNotificationListUseCase, times(1)).execute(any(User.class));
     }
 }
