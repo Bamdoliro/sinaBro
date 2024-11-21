@@ -12,3 +12,16 @@ include::{snippets}/fcm-token-controller-test/fcm_토큰을_저장한다/http-re
 ==== 응답
 ===== 정상 응답
 include::{snippets}/fcm-token-controller-test/fcm_토큰을_저장한다/http-response.adoc[]
+
+=== FCM 토큰 삭제
+사용자는 디바이스의 FCM 토큰을 삭제할 수 있습니다.
+
+==== 요청 형식
+include::{snippets}/fcm-token-controller-test/fcm_토큰을_삭제한다/request-fields.adoc[]
+
+===== 요청
+include::{snippets}/fcm-token-controller-test/fcm_토큰을_삭제한다/http-request.adoc[]
+
+==== 응답
+===== 정상 응답
+include::{snippets}/fcm-token-controller-test/fcm_토큰을_삭제한다/http-response.adoc[]
