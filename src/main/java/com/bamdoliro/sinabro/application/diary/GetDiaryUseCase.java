@@ -7,6 +7,7 @@ import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.diary.dto.response.DiaryResponse;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
@@ -14,6 +15,7 @@ public class GetDiaryUseCase {
 
     private final DiaryFacade diaryFacade;
 
+    @Transactional
     public DiaryResponse execute(User user, Long id) {
         Diary diary = diaryFacade.getDiary(id);
         validate(user, diary);

@@ -7,6 +7,7 @@ import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.persistence.diary.DiaryRepository;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
@@ -15,6 +16,7 @@ public class DeleteDiaryUseCase {
     private final DiaryFacade diaryFacade;
     private final DiaryRepository diaryRepository;
 
+    @Transactional
     public void execute(User user, Long id) {
         Diary diary = diaryFacade.getDiary(id);
         validate(user, diary);

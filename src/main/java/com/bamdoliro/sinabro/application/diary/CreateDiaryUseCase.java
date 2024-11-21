@@ -8,6 +8,7 @@ import com.bamdoliro.sinabro.presentation.diary.dto.request.DiaryRequest;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import com.bamdoliro.sinabro.shared.response.IdResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
@@ -15,6 +16,7 @@ public class CreateDiaryUseCase {
 
     private final DiaryRepository diaryRepository;
 
+    @Transactional
     public IdResponse execute(User user, DiaryRequest request) {
         validate(user, request);
         Diary diary = diaryRepository.save(

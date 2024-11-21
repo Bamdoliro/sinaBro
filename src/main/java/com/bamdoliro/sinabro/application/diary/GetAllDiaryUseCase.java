@@ -6,6 +6,7 @@ import com.bamdoliro.sinabro.infrastructure.persistence.diary.DiaryRepository;
 import com.bamdoliro.sinabro.presentation.diary.dto.response.ListDiaryResponse;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +17,7 @@ public class GetAllDiaryUseCase {
 
     private final DiaryRepository diaryRepository;
 
+    @Transactional
     public List<ListDiaryResponse> execute(User user, LocalDate startDate, LocalDate endDate) {
         List<Diary> diaryList;
         if (startDate != null && endDate != null) {
