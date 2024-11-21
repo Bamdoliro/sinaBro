@@ -41,12 +41,11 @@ public class DiaryFixture {
 
     public static UpdateDiaryRequest createUpdateDiaryRequest() {
         return new UpdateDiaryRequest(
-                "오늘은 네트워크 수업을 했다. WireShark를 통해서 패킷을 직접 분석해보니까 재밌었다.\n" +
-                        "그런데 C++ 알고리즘 시간이 진짜 어려웠다. 그래프 너무 힘들다. 도와줘요 창엽쌤",
+                "집가고싶다",
                 List.of(
-                        Emotion.FRUITFUL,
-                        Emotion.CALM,
-                        Emotion.GLOOMY
+                        Emotion.IRRITATED,
+                        Emotion.FURIOUS,
+                        Emotion.ENRAGED
                 )
         );
     }

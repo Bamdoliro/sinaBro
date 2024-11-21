@@ -214,6 +214,10 @@ class DiaryControllerTest extends RestDocsTestSupport {
                                 headerWithName(HttpHeaders.AUTHORIZATION)
                                         .description("Bearer Token")
                         ),
+                        pathParameters(
+                                parameterWithName("diary-id")
+                                        .description("수정할 감정일기의 id")
+                        ),
                         requestFields(
                                 fieldWithPath("content")
                                         .type(JsonFieldType.STRING)
@@ -223,6 +227,30 @@ class DiaryControllerTest extends RestDocsTestSupport {
                                         .description("<<emotion, 감정(1~3개)>>")
                         )
                 ));
+
+        verify(updateDiaryUseCase, times(1)).execute(any(User.class), anyLong(), any(UpdateDiaryRequest.class));
+    }
+
+    @Test
+    void 감정일기를_수정할_때_감정일기가_없으면_예외가_발생한다() throws Exception {
+        Long diaryId = 1L;
+        User user = UserFixture.createUser();
+        UpdateDiaryRequest request = DiaryFixture.createUpdateDiaryRequest();
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willThrow(new DiaryNotFoundException()).given(updateDiaryUseCase).execute(any(User.class), anyLong(), any(UpdateDiaryRequest.class));
+
+        mockMvc.perform(put("/diaries/{diary-id}", diaryId)
+                .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(request))
+        )
+
+                .andExpect(status().isNotFound())
+
+                .andDo(restDocs.document());
 
         verify(updateDiaryUseCase, times(1)).execute(any(User.class), anyLong(), any(UpdateDiaryRequest.class));
     }
@@ -275,9 +303,31 @@ class DiaryControllerTest extends RestDocsTestSupport {
                         ),
                         pathParameters(
                                 parameterWithName("diary-id")
-                                        .description("조회할 감정일기의 id")
+                                        .description("삭제할 감정일기의 id")
                         )
                 ));
+
+        verify(deleteDiaryUseCase, times(1)).execute(any(User.class), anyLong());
+    }
+
+    @Test
+    void 감정일기를_삭제할_때_감정일기가_없으면_에러가_발생한다() throws Exception {
+        Long diaryId = 1L;
+        User user = UserFixture.createUser();
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willThrow(new DiaryNotFoundException()).given(deleteDiaryUseCase).execute(any(User.class), anyLong());
+
+        mockMvc.perform(delete("/diaries/{diary-id}", diaryId)
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                .andExpect(status().isNotFound())
+
+                .andDo(restDocs.document());
 
         verify(deleteDiaryUseCase, times(1)).execute(any(User.class), anyLong());
     }
