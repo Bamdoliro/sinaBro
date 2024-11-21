@@ -99,7 +99,7 @@ public class JwtControllerTest extends RestDocsTestSupport {
                 .contentType(MediaType.APPLICATION_JSON)
         )
 
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
 
                 .andDo(restDocs.document());
     }
