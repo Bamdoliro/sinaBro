@@ -3,7 +3,7 @@ package com.bamdoliro.sinabro.application.diary;
 import com.bamdoliro.sinabro.domain.diary.domain.Diary;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.persistence.diary.DiaryRepository;
-import com.bamdoliro.sinabro.presentation.diary.dto.response.SimpleDiaryResponse;
+import com.bamdoliro.sinabro.presentation.diary.dto.response.ListDiaryResponse;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +16,7 @@ public class GetAllDiaryUseCase {
 
     private final DiaryRepository diaryRepository;
 
-    public List<SimpleDiaryResponse> execute(User user, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<ListDiaryResponse> execute(User user, LocalDateTime startDate, LocalDateTime endDate) {
         List<Diary> diaryList;
         if (startDate != null && endDate != null) {
             diaryList = diaryRepository.findAllByAuthorAndCreatedAtBetween(user, startDate, endDate);
@@ -29,7 +29,7 @@ public class GetAllDiaryUseCase {
         }
 
          return diaryList.stream()
-                .map(SimpleDiaryResponse::new)
+                .map(ListDiaryResponse::new)
                 .toList();
     }
 }

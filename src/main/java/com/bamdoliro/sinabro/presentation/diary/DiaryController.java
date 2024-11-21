@@ -4,7 +4,7 @@ import com.bamdoliro.sinabro.application.diary.*;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.diary.dto.request.DiaryRequest;
 import com.bamdoliro.sinabro.presentation.diary.dto.response.DiaryResponse;
-import com.bamdoliro.sinabro.presentation.diary.dto.response.SimpleDiaryResponse;
+import com.bamdoliro.sinabro.presentation.diary.dto.response.ListDiaryResponse;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
 import com.bamdoliro.sinabro.shared.response.IdResponse;
 import com.bamdoliro.sinabro.shared.response.ListCommonResponse;
@@ -39,7 +39,7 @@ public class DiaryController {
     }
 
     @GetMapping
-    public ListCommonResponse<SimpleDiaryResponse> getAllDiary(
+    public ListCommonResponse<ListDiaryResponse> getAllDiary(
             @AuthenticationPrincipal User user,
             @RequestParam(required = false) LocalDateTime startDate,
             @RequestParam(required = false) LocalDateTime endDate

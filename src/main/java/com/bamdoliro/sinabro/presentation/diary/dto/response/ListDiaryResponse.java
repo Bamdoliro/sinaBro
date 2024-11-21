@@ -6,12 +6,12 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class SimpleDiaryResponse {
+public class ListDiaryResponse {
 
     private final Long id;
     private final LocalDateTime createdAt;
 
-    public SimpleDiaryResponse(Diary diary) {
+    public ListDiaryResponse(Diary diary) {
         this.id = diary.getId();
         this.createdAt = diary.getCreatedAt();
     }
