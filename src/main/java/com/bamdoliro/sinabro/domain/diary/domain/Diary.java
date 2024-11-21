@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -32,13 +33,17 @@ public class Diary extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private List<Emotion> emotionList;
 
+    @Column(nullable = false)
+    private LocalDate writtenAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
 
-    public Diary(String content, List<Emotion> emotionList, User author) {
+    public Diary(String content, List<Emotion> emotionList, LocalDate writtenAt, User author) {
         this.content = content;
         this.emotionList = emotionList;
+        this.writtenAt = writtenAt;
         this.author = author;
     }
 

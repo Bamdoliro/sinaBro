@@ -1,6 +1,7 @@
 package com.bamdoliro.sinabro.application.diary;
 
 import com.bamdoliro.sinabro.domain.diary.domain.Diary;
+import com.bamdoliro.sinabro.domain.diary.exception.DiaryAlreadyWrittenException;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.persistence.diary.DiaryRepository;
 import com.bamdoliro.sinabro.presentation.diary.dto.request.DiaryRequest;
@@ -15,10 +16,17 @@ public class CreateDiaryUseCase {
     private final DiaryRepository diaryRepository;
 
     public IdResponse execute(User user, DiaryRequest request) {
+        validate(user, request);
         Diary diary = diaryRepository.save(
-                new Diary(request.getContent(), request.getEmotionList(), user)
+                new Diary(request.getContent(), request.getEmotionList(), request.getWrittenAt(), user)
         );
 
         return new IdResponse(diary);
+    }
+
+    private void validate(User user, DiaryRequest request) {
+        if (diaryRepository.existsByAuthorAndWrittenAt(user, request.getWrittenAt())) {
+            throw new DiaryAlreadyWrittenException();
+        }
     }
 }

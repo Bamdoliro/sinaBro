@@ -7,7 +7,7 @@ import com.bamdoliro.sinabro.presentation.diary.dto.response.ListDiaryResponse;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,14 +16,14 @@ public class GetAllDiaryUseCase {
 
     private final DiaryRepository diaryRepository;
 
-    public List<ListDiaryResponse> execute(User user, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<ListDiaryResponse> execute(User user, LocalDate startDate, LocalDate endDate) {
         List<Diary> diaryList;
         if (startDate != null && endDate != null) {
-            diaryList = diaryRepository.findAllByAuthorAndCreatedAtBetween(user, startDate, endDate);
+            diaryList = diaryRepository.findAllByAuthorAndWrittenAtBetween(user, startDate, endDate);
         } else if (startDate != null) {
-            diaryList = diaryRepository.findAllByAuthorAndCreatedAtAfter(user, startDate);
+            diaryList = diaryRepository.findAllByAuthorAndWrittenAtAfter(user, startDate);
         } else if (endDate != null) {
-            diaryList = diaryRepository.findAllByAuthorAndCreatedAtBefore(user, endDate);
+            diaryList = diaryRepository.findAllByAuthorAndWrittenAtBefore(user, endDate);
         } else {
             diaryList = diaryRepository.findAllByAuthor(user);
         }

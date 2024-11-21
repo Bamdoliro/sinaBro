@@ -3,6 +3,7 @@ package com.bamdoliro.sinabro.presentation.diary;
 import com.bamdoliro.sinabro.application.diary.*;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.diary.dto.request.DiaryRequest;
+import com.bamdoliro.sinabro.presentation.diary.dto.request.UpdateDiaryRequest;
 import com.bamdoliro.sinabro.presentation.diary.dto.response.DiaryResponse;
 import com.bamdoliro.sinabro.presentation.diary.dto.response.ListDiaryResponse;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
@@ -14,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @RequestMapping("/diaries")
@@ -41,8 +42,8 @@ public class DiaryController {
     @GetMapping
     public ListCommonResponse<ListDiaryResponse> getAllDiary(
             @AuthenticationPrincipal User user,
-            @RequestParam(required = false) LocalDateTime startDate,
-            @RequestParam(required = false) LocalDateTime endDate
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate
     ) {
         return ListCommonResponse.ok(
             getAllDiaryUseCase.execute(user, startDate, endDate)
@@ -64,7 +65,7 @@ public class DiaryController {
     public void updateDiary(
             @AuthenticationPrincipal User user,
             @PathVariable(name = "diary-id") Long diaryId,
-            @RequestBody @Valid DiaryRequest request
+            @RequestBody @Valid UpdateDiaryRequest request
     ) {
         updateDiaryUseCase.execute(user, diaryId, request);
     }
