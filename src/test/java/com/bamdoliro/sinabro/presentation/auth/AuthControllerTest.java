@@ -11,7 +11,6 @@ import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.restdocs.request.RequestDocumentation;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -21,6 +20,8 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AuthControllerTest extends RestDocsTestSupport {
@@ -51,8 +52,8 @@ class AuthControllerTest extends RestDocsTestSupport {
                 .andExpect(status().isOk())
 
                 .andDo(restDocs.document(
-                        RequestDocumentation.queryParameters(
-                                RequestDocumentation.parameterWithName("code")
+                        queryParameters(
+                                parameterWithName("code")
                                         .description("Google OAuth 인증 코드. 리다이렉트시 url에 포함됨")
                         )
                 ));
