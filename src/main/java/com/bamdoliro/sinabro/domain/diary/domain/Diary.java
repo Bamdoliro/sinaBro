@@ -5,7 +5,6 @@ import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.shared.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,8 +36,7 @@ public class Diary extends BaseTimeEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
 
-    @Builder
-    public Diary(String content, User author, List<Emotion> emotionList) {
+    public Diary(String content, List<Emotion> emotionList, User author) {
         this.content = content;
         this.emotionList = emotionList;
         this.author = author;

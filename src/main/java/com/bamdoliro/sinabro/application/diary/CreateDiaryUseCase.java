@@ -16,11 +16,7 @@ public class CreateDiaryUseCase {
 
     public IdResponse execute(User user, DiaryRequest request) {
         Diary diary = diaryRepository.save(
-                Diary.builder()
-                        .content(request.getContent())
-                        .emotionList(request.getEmotionList())
-                        .author(user)
-                        .build()
+                new Diary(request.getContent(), request.getEmotionList(), user)
         );
 
         return new IdResponse(diary);
