@@ -2,9 +2,11 @@ package com.bamdoliro.sinabro.presentation.diary;
 
 
 import com.bamdoliro.sinabro.domain.auth.exception.AuthorityMismatchException;
+import com.bamdoliro.sinabro.domain.diary.exception.DiaryAlreadyWrittenException;
 import com.bamdoliro.sinabro.domain.diary.exception.DiaryNotFoundException;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.diary.dto.request.DiaryRequest;
+import com.bamdoliro.sinabro.presentation.diary.dto.request.UpdateDiaryRequest;
 import com.bamdoliro.sinabro.presentation.diary.dto.response.DiaryResponse;
 import com.bamdoliro.sinabro.presentation.diary.dto.response.ListDiaryResponse;
 import com.bamdoliro.sinabro.shared.fixture.AuthFixture;
@@ -18,7 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -37,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class DiaryControllerTest extends RestDocsTestSupport {
 
     @Test
-    void 감정일기를_작성한댜() throws Exception {
+    void 감정일기를_작성한다() throws Exception {
         User user = UserFixture.createUser();
         DiaryRequest request = DiaryFixture.createDiaryRequest();
 
@@ -65,11 +67,35 @@ class DiaryControllerTest extends RestDocsTestSupport {
                                         .description("감정일기 내용(최대 5000자)"),
                                 fieldWithPath("emotionList")
                                         .type(JsonFieldType.ARRAY)
-                                        .description("<<emotion, 감정(1~3개)>>")
+                                        .description("<<emotion, 감정(1~3개)>>"),
+                                fieldWithPath("writtenAt")
+                                        .type(JsonFieldType.STRING)
+                                        .description("감정일기 작성일(ISO 8601 형식)")
                         )
                 ));
 
         verify(createDiaryUseCase, times(1)).execute(any(User.class), any(DiaryRequest.class));
+    }
+
+    @Test
+    void 감정일기를_작성할_때_이미_그날_작성한_감정일기가_있으면_예외가_발생한다() throws Exception {
+        User user = UserFixture.createUser();
+        DiaryRequest request = DiaryFixture.createDiaryRequest();
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        given(createDiaryUseCase.execute(any(User.class), any(DiaryRequest.class))).willThrow(new DiaryAlreadyWrittenException());
+
+        mockMvc.perform(post("/diaries")
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(request))
+                )
+
+                .andExpect(status().isConflict())
+
+                .andDo(restDocs.document());
     }
 
     @Test
@@ -85,12 +111,12 @@ class DiaryControllerTest extends RestDocsTestSupport {
 
         given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
         given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
-        given(getAllDiaryUseCase.execute(any(User.class), any(LocalDateTime.class), any(LocalDateTime.class))).willReturn(responseList);
+        given(getAllDiaryUseCase.execute(any(User.class), any(LocalDate.class), any(LocalDate.class))).willReturn(responseList);
 
         mockMvc.perform(get("/diaries")
                 .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
-                .param("startDate", LocalDateTime.of(2024, 1, 1, 0, 0).toString())
-                .param("endDate", LocalDateTime.of(2024, 12, 31, 23, 59, 59).toString())
+                .param("startDate", LocalDate.of(2024, 1, 1).toString())
+                .param("endDate", LocalDate.of(2024, 12, 31).toString())
                 .contentType(MediaType.APPLICATION_JSON)
         )
 
@@ -103,15 +129,15 @@ class DiaryControllerTest extends RestDocsTestSupport {
                         ),
                         queryParameters(
                                 parameterWithName("startDate")
-                                        .description("조회를 시작할 기준 날짜 및 시간(ISO 8601 형식)")
+                                        .description("조회를 시작할 기준 날짜(ISO 8601 형식)")
                                         .optional(),
                                 parameterWithName("endDate")
-                                        .description("조회를 종료할 기준 날짜 및 시간(ISO 8601 형식)")
+                                        .description("조회를 종료할 기준 날짜(ISO 8601 형식)")
                                         .optional()
                         )
                 ));
 
-        verify(getAllDiaryUseCase, times(1)).execute(any(User.class), any(LocalDateTime.class), any(LocalDateTime.class));
+        verify(getAllDiaryUseCase, times(1)).execute(any(User.class), any(LocalDate.class), any(LocalDate.class));
     }
 
     @Test
@@ -168,7 +194,7 @@ class DiaryControllerTest extends RestDocsTestSupport {
     void 자신이_작성한_감정일기를_수정한다() throws Exception {
         Long diaryId = 1L;
         User user = UserFixture.createUser();
-        DiaryRequest request = DiaryFixture.createDiaryRequest();
+        UpdateDiaryRequest request = DiaryFixture.createUpdateDiaryRequest();
 
         given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
         given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
@@ -198,18 +224,18 @@ class DiaryControllerTest extends RestDocsTestSupport {
                         )
                 ));
 
-        verify(updateDiaryUseCase, times(1)).execute(any(User.class), anyLong(), any(DiaryRequest.class));
+        verify(updateDiaryUseCase, times(1)).execute(any(User.class), anyLong(), any(UpdateDiaryRequest.class));
     }
 
     @Test
     void 감정일기를_수정할_때_본인의_일기가_아니면_예외가_발생한다() throws Exception {
         Long diaryId = 1L;
         User user = UserFixture.createUser();
-        DiaryRequest request = DiaryFixture.createDiaryRequest();
+        UpdateDiaryRequest request = DiaryFixture.createUpdateDiaryRequest();
 
         given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
         given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
-        willThrow(new AuthorityMismatchException()).given(updateDiaryUseCase).execute(any(User.class), anyLong(), any(DiaryRequest.class));
+        willThrow(new AuthorityMismatchException()).given(updateDiaryUseCase).execute(any(User.class), anyLong(), any(UpdateDiaryRequest.class));
 
         mockMvc.perform(put("/diaries/{diary-id}", diaryId)
                 .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
@@ -222,7 +248,7 @@ class DiaryControllerTest extends RestDocsTestSupport {
 
                 .andDo(restDocs.document());
 
-        verify(updateDiaryUseCase, times(1)).execute(any(User.class), anyLong(), any(DiaryRequest.class));
+        verify(updateDiaryUseCase, times(1)).execute(any(User.class), anyLong(), any(UpdateDiaryRequest.class));
     }
 
     @Test
