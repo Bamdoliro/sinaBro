@@ -17,6 +17,7 @@ public class SelectCharacterUseCase {
 
     private final CharacterRepository characterRepository;
 
+    @Transactional
     public void execute(User user, SelectCharacterRequest request) {
         validate(user);
 
