@@ -12,6 +12,10 @@ import com.bamdoliro.sinabro.domain.auth.service.TokenService;
 import com.bamdoliro.sinabro.presentation.auth.AuthController;
 import com.bamdoliro.sinabro.presentation.fcm.token.dto.FCMTokenController;
 import com.bamdoliro.sinabro.presentation.notification.NotificationController;
+import com.bamdoliro.sinabro.application.character.SelectCharacterUseCase;
+import com.bamdoliro.sinabro.domain.auth.service.TokenService;
+import com.bamdoliro.sinabro.presentation.auth.AuthController;
+import com.bamdoliro.sinabro.presentation.character.CharacterController;
 import com.bamdoliro.sinabro.presentation.user.UserController;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationArgumentResolver;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationExtractor;
@@ -29,9 +33,10 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest({
         AuthController.class,
         UserController.class,
-        SharedController.class,
         NotificationController.class,
-        FCMTokenController.class
+        FCMTokenController.class,
+        CharacterController.class,
+        SharedController.class
 })
 public abstract class ControllerTest {
 
@@ -66,6 +71,9 @@ public abstract class ControllerTest {
 
     @MockBean
     protected DeleteFCMTokenUseCase deleteFCMTokenUseCase;
+  
+    @MockBean
+    protected SelectCharacterUseCase selectCharacterUseCase;
 
     // Service
     @MockBean
@@ -82,7 +90,7 @@ public abstract class ControllerTest {
     @MockBean
     protected AuthenticationExtractor authenticationExtractor;
 
-    protected String toJson(Object object) throws JsonProcessingException, JsonProcessingException {
+    protected String toJson(Object object) throws JsonProcessingException {
         return objectMapper.writeValueAsString(object);
     }
 }

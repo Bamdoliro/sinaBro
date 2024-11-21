@@ -2,3 +2,6 @@
 
 [[authority]]
 include::{snippets}/enum-controller-test/enums/custom-response-fields-authority.adoc[]
+
+[[character-type]]
+include::{snippets}/enum-controller-test/enums/custom-response-fields-characterType.adoc[]

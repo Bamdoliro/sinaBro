@@ -39,6 +39,11 @@ public class EnumControllerTest extends RestDocsTestSupport {
                                 beneathPath("authority").withSubsectionId("authority"),
                                 attributes(key("title").value("Authority")),
                                 enumConvertFieldDescriptor((enumDocs.getAuthority()))
+                        ),
+                        customResponseFields("custom-response",
+                                beneathPath("characterType").withSubsectionId("characterType"),
+                                attributes(key("title").value("CharacterType")),
+                                enumConvertFieldDescriptor((enumDocs.getCharacterType()))
                         )
                 ));
     }

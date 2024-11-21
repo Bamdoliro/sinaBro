@@ -19,4 +19,6 @@ include::fcm-token.adoc[]
 
 include::notification.adoc[]
 
+include::character.adoc[]
+
 include::enum.adoc[]
