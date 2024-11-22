@@ -1,6 +1,7 @@
 package com.bamdoliro.sinabro.domain.fcm.token.domain;
 
 import com.bamdoliro.sinabro.domain.user.domain.User;
+import com.bamdoliro.sinabro.shared.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_fcm_token")
 @Entity
-public class FCMToken {
+public class FCMToken extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
