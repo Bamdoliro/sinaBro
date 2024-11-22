@@ -1,4 +1,4 @@
-package com.bamdoliro.sinabro.infrastructure.feign.auth.google.dto.request;
+package com.bamdoliro.sinabro.infrastructure.oauth.google.feign.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

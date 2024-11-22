@@ -1,7 +1,7 @@
-package com.bamdoliro.sinabro.infrastructure.feign.auth.google;
+package com.bamdoliro.sinabro.infrastructure.oauth.google.feign;
 
-import com.bamdoliro.sinabro.infrastructure.feign.auth.google.dto.request.GoogleAuthRequest;
-import com.bamdoliro.sinabro.infrastructure.feign.auth.google.dto.response.GoogleTokenResponse;
+import com.bamdoliro.sinabro.infrastructure.oauth.google.feign.dto.request.GoogleAuthRequest;
+import com.bamdoliro.sinabro.infrastructure.oauth.google.feign.dto.response.GoogleTokenResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
