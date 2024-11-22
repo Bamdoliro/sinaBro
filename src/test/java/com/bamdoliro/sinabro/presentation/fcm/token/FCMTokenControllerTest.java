@@ -62,7 +62,7 @@ public class FCMTokenControllerTest extends RestDocsTestSupport {
 
         given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
         given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
-        willDoNothing().given(deleteFCMTokenUseCase).execute(request);
+        willDoNothing().given(deleteFCMTokenUseCase).execute(user, request);
 
         mockMvc.perform(delete("/fcm-token")
                         .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
@@ -84,6 +84,6 @@ public class FCMTokenControllerTest extends RestDocsTestSupport {
                         )
                 ));
 
-        verify(deleteFCMTokenUseCase, times(1)).execute(any(DeleteFCMTokenRequest.class));
+        verify(deleteFCMTokenUseCase, times(1)).execute(any(User.class), any(DeleteFCMTokenRequest.class));
     }
 }

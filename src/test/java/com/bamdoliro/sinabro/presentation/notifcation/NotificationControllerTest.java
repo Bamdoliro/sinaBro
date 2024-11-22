@@ -8,11 +8,10 @@ import com.bamdoliro.sinabro.presentation.notification.dto.response.ListNotifica
 import com.bamdoliro.sinabro.shared.fixture.AuthFixture;
 import com.bamdoliro.sinabro.shared.fixture.NotificationFixture;
 import com.bamdoliro.sinabro.shared.fixture.UserFixture;
-import com.bamdoliro.sinabro.shared.response.ListCommonResponse;
 import com.bamdoliro.sinabro.shared.util.RestDocsTestSupport;
-import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import java.util.List;

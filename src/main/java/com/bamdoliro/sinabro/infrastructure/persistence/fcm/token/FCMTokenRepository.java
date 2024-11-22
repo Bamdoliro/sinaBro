@@ -10,4 +10,6 @@ public interface FCMTokenRepository extends JpaRepository<FCMToken, Long> {
     List<FCMToken> findAllByUser(User user);
 
     void deleteByToken(String token);
+
+    boolean existsByUserAndToken(User user, String token);
 }

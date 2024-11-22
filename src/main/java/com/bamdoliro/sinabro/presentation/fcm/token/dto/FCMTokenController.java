@@ -35,6 +35,6 @@ public class FCMTokenController {
             @AuthenticationPrincipal(authority = Authority.USER) User user,
             @RequestBody @Valid DeleteFCMTokenRequest request
     ) {
-        deleteFCMTokenUseCase.execute(request);
+        deleteFCMTokenUseCase.execute(user, request);
     }
 }
