@@ -1,4 +1,4 @@
-package com.bamdoliro.sinabro.presentation.fcm.token.dto;
+package com.bamdoliro.sinabro.presentation.fcm.token;
 
 import com.bamdoliro.sinabro.application.fcm.token.DeleteFCMTokenUseCase;
 import com.bamdoliro.sinabro.application.fcm.token.SaveFCMTokenUseCase;
