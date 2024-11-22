@@ -5,7 +5,6 @@ import com.bamdoliro.sinabro.shared.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,7 +30,6 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, length = 10)
     private Authority authority;
 
-    @Builder
     public User(String email, String name, Authority authority) {
         this.email = email;
         this.name = name;

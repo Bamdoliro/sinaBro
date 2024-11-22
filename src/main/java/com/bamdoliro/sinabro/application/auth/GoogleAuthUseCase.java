@@ -38,11 +38,7 @@ public class GoogleAuthUseCase {
 
         if (user.isEmpty()) {
             userRepository.save(
-                    User.builder()
-                            .email(email)
-                            .name(information.getName())
-                            .authority(Authority.USER)
-                            .build()
+                    new User(email, information.getName(), Authority.USER)
             );
         }
 

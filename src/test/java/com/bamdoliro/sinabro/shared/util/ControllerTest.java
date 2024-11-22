@@ -4,6 +4,10 @@ import com.bamdoliro.sinabro.application.auth.GoogleAuthLinkUseCase;
 import com.bamdoliro.sinabro.application.auth.GoogleAuthUseCase;
 import com.bamdoliro.sinabro.application.auth.LogOutUseCase;
 import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
+import com.bamdoliro.sinabro.application.diary.*;
+import com.bamdoliro.sinabro.domain.auth.service.TokenService;
+import com.bamdoliro.sinabro.presentation.auth.AuthController;
+import com.bamdoliro.sinabro.presentation.diary.DiaryController;
 import com.bamdoliro.sinabro.application.character.SelectCharacterUseCase;
 import com.bamdoliro.sinabro.application.fcm.token.DeleteFCMTokenUseCase;
 import com.bamdoliro.sinabro.application.fcm.token.SaveFCMTokenUseCase;
@@ -31,6 +35,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest({
         AuthController.class,
         UserController.class,
+        DiaryController.class,
         NotificationController.class,
         FCMTokenController.class,
         CharacterController.class,
@@ -46,6 +51,8 @@ public abstract class ControllerTest {
 
 
     // UseCase
+
+    // Auth
     @MockBean
     protected GoogleAuthLinkUseCase googleAuthLinkUseCase;
 
@@ -58,6 +65,23 @@ public abstract class ControllerTest {
     @MockBean
     protected LogOutUseCase logOutUseCase;
 
+    // Diary
+    @MockBean
+    protected CreateDiaryUseCase createDiaryUseCase;
+
+    @MockBean
+    protected GetAllDiaryUseCase getAllDiaryUseCase;
+
+    @MockBean
+    protected GetDiaryUseCase getDiaryUseCase;
+
+    @MockBean
+    protected UpdateDiaryUseCase updateDiaryUseCase;
+
+    @MockBean
+    protected DeleteDiaryUseCase deleteDiaryUseCase;
+
+    // Character
     @MockBean
     protected SendNotificationUseCase sendNotificationUseCase;
 
@@ -87,6 +111,7 @@ public abstract class ControllerTest {
 
     @MockBean
     protected AuthenticationExtractor authenticationExtractor;
+
 
     protected String toJson(Object object) throws JsonProcessingException {
         return objectMapper.writeValueAsString(object);

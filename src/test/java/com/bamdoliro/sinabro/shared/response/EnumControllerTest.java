@@ -41,6 +41,16 @@ public class EnumControllerTest extends RestDocsTestSupport {
                                 enumConvertFieldDescriptor((enumDocs.getAuthority()))
                         ),
                         customResponseFields("custom-response",
+                                beneathPath("emotion").withSubsectionId("emotion"),
+                                attributes(key("title").value("Emotion")),
+                                enumConvertFieldDescriptor((enumDocs.getEmotion()))
+                        ),
+                        customResponseFields("custom-response",
+                                beneathPath("emotionCategory").withSubsectionId("emotionCategory"),
+                                attributes(key("title").value("EmotionCategory")),
+                                enumConvertFieldDescriptor((enumDocs.getEmotionCategory()))
+                        ),
+                        customResponseFields("custom-response",
                                 beneathPath("characterType").withSubsectionId("characterType"),
                                 attributes(key("title").value("CharacterType")),
                                 enumConvertFieldDescriptor((enumDocs.getCharacterType()))

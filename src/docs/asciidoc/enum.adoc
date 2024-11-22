@@ -3,5 +3,11 @@
 [[authority]]
 include::{snippets}/enum-controller-test/enums/custom-response-fields-authority.adoc[]
 
+[[emotion]]
+include::{snippets}/enum-controller-test/enums/custom-response-fields-emotion.adoc[]
+
+[[emotionCategory]]
+include::{snippets}/enum-controller-test/enums/custom-response-fields-emotionCategory.adoc[]
+
 [[character-type]]
 include::{snippets}/enum-controller-test/enums/custom-response-fields-characterType.adoc[]
