@@ -21,4 +21,6 @@ include::notification.adoc[]
 
 include::character.adoc[]
 
+include::diary.adoc[]
+
 include::enum.adoc[]
