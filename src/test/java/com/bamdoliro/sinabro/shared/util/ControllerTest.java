@@ -9,6 +9,8 @@ import com.bamdoliro.sinabro.application.diary.*;
 import com.bamdoliro.sinabro.application.fcm.token.DeleteFCMTokenUseCase;
 import com.bamdoliro.sinabro.application.fcm.token.SaveFCMTokenUseCase;
 import com.bamdoliro.sinabro.application.letter.GenerateLetterUseCase;
+import com.bamdoliro.sinabro.application.letter.GetAllLetterUseCase;
+import com.bamdoliro.sinabro.application.letter.GetLetterUseCase;
 import com.bamdoliro.sinabro.application.notification.QueryNotificationListUseCase;
 import com.bamdoliro.sinabro.application.notification.SendNotificationUseCase;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
@@ -101,6 +103,12 @@ public abstract class ControllerTest {
     // Letter
     @MockBean
     protected GenerateLetterUseCase generateLetterUseCase;
+
+    @MockBean
+    protected GetAllLetterUseCase getAllLetterUseCase;
+
+    @MockBean
+    protected GetLetterUseCase getLetterUseCase;
 
     // Service
     @MockBean
