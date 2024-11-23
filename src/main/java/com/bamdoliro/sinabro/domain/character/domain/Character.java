@@ -5,7 +5,6 @@ import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.shared.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,7 +32,11 @@ public class Character extends BaseTimeEntity {
 
     public Character(CharacterType type, User user) {
         this.type = type;
-        this.friendship = 0;
+        this.friendship = 1;
         this.user = user;
+    }
+
+    public void increaseFriendShip() {
+        this.friendship++;
     }
 }

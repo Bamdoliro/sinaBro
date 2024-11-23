@@ -1,0 +1,55 @@
+== 편지 Letter
+
+=== 편지 생성
+사용자는 편지를 생성할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/letter-controller-test/편지를_생성한다/request-headers.adoc[]
+
+===== 요청
+include::{snippets}/letter-controller-test/편지를_생성한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/letter-controller-test/편지를_생성한다/http-response.adoc[]
+
+===== 편지 생성에 실패한 경우
+include::{snippets}/letter-controller-test/편지생성에_실패하면_오류가_발생한다/http-response.adoc[]
+
+=== 편지 전체 조회
+사용자는 편지 전체를 조회할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/letter-controller-test/유저가_편지를_전체_조회한다/request-headers.adoc[]
+
+==== 요청
+include::{snippets}/letter-controller-test/유저가_편지를_전체_조회한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/letter-controller-test/유저가_편지를_전체_조회한다/http-response.adoc[]
+
+=== 편지 조회
+사용자는 편지를 조회할 수 있습니다.
+
+==== 요청
+
+===== Request Header
+include::{snippets}/letter-controller-test/유저가_편지를_단일_조회한다/request-headers.adoc[]
+
+===== Query Parameter
+include::{snippets}/letter-controller-test/유저가_편지를_단일_조회한다/path-parameters.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/letter-controller-test/유저가_편지를_단일_조회한다/response-body.adoc[]
+
+===== 조회할 편지가 없는 경우
+include::{snippets}/letter-controller-test/유저가_편지를_단일_조회할때_조회할_편지가_없으면_에러가_발생한다/response-body.adoc[]

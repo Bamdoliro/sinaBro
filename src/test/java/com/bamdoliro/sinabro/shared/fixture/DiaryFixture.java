@@ -22,6 +22,8 @@ public class DiaryFixture {
                         Emotion.GLOOMY
                 ),
                 LocalDate.now(),
+                "당황",
+                "수업",
                 UserFixture.createUser()
         );
     }

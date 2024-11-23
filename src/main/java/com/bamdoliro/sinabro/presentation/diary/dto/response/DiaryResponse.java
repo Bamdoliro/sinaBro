@@ -10,15 +10,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
 public class DiaryResponse {
 
-    private Long id;
-    private String content;
-    private List<Emotion> emotionList;
-    private LocalDate writtenAt;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private final Long id;
+    private final String content;
+    private final List<Emotion> emotionList;
+    private final LocalDate writtenAt;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
     public DiaryResponse(Diary diary) {
         this.id = diary.getId();
