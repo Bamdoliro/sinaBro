@@ -44,3 +44,19 @@ include::{snippets}/auth-controller-test/리프레시_토큰으로_액세스_토
 
 ==== 액세스 토큰으로 요청한 경우
 include::{snippets}/auth-controller-test/액세스_토큰으로_액세스_토큰을_재발급하면_예외가_발생한다/http-response.adoc[]
+
+=== 로그아웃
+로그인 한 사용자는 로그아웃 할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/auth-controller-test/유저가_로그아웃한다/request-headers.adoc[]
+
+==== 요청
+include::{snippets}/auth-controller-test/유저가_로그아웃한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/auth-controller-test/유저가_로그아웃한다/http-response.adoc[]
