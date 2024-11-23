@@ -19,9 +19,9 @@ public enum Emotion implements EnumProperty {
     AMAZED("놀라운", Category.SURPRISED),
     ASTOUNDED("경악한", Category.SURPRISED),
 
-    EXCITED("설레는", Category.LOVE),
-    POUNDING("두근거리는", Category.LOVE),
-    DEDICATED("헌신적인", Category.LOVE),
+    EXCITED("설레는", Category.ROMANTIC),
+    POUNDING("두근거리는", Category.ROMANTIC),
+    DEDICATED("헌신적인", Category.ROMANTIC),
 
     GLOOMY("시무룩한", Category.DEPRESSED),
     HOPELESS("절망스러운", Category.DEPRESSED),
@@ -48,7 +48,7 @@ public enum Emotion implements EnumProperty {
         JOYFUL("기쁜"),
         SAD("슬픈"),
         SURPRISED("놀란"),
-        LOVE("사랑"),
+        ROMANTIC("사랑"),
         DEPRESSED("우울한"),
         STABLE("평범한"),
         EMBARRASSED("당황스러운"),
