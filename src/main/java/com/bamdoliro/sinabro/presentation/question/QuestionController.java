@@ -1,9 +1,6 @@
 package com.bamdoliro.sinabro.presentation.question;
 
-import com.bamdoliro.sinabro.application.question.CreateQuestionUseCase;
-import com.bamdoliro.sinabro.application.question.GetAllQuestionUseCase;
-import com.bamdoliro.sinabro.application.question.GetQuestionUseCase;
-import com.bamdoliro.sinabro.application.question.UpdateQuestionUseCase;
+import com.bamdoliro.sinabro.application.question.*;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.question.dto.request.QuestionRequest;
 import com.bamdoliro.sinabro.presentation.question.dto.response.ListQuestionResponse;
@@ -28,6 +25,7 @@ public class QuestionController {
     private final GetAllQuestionUseCase getAllQuestionUseCase;
     private final GetQuestionUseCase getQuestionUseCase;
     private final UpdateQuestionUseCase updateQuestionUseCase;
+    private final DeleteQuestionUseCase deleteQuestionUseCase;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -66,4 +64,12 @@ public class QuestionController {
         updateQuestionUseCase.execute(questionId, request);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{question-id}")
+    public void deleteQuestion(
+            @AuthenticationPrincipal(authority = Authority.ADMIN) User user,
+            @PathVariable(name = "question-id") Long questionId
+    ) {
+        deleteQuestionUseCase.execute(questionId);
+    }
 }
