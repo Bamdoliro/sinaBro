@@ -21,14 +21,4 @@ public class LetterFacade {
         return letterRepository.findByUserAndId(user, id)
                 .orElseThrow(LetterNotFoundException::new);
     }
-
-    @Transactional(readOnly = true)
-    public List<Letter> getAllLetter(User user) {
-        List<Letter> letters = letterRepository.findAllByUser(user);
-        if(letters.isEmpty()) {
-            throw new LetterNotFoundException();
-        }
-
-        return letters;
-    }
 }

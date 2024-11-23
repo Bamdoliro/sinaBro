@@ -102,26 +102,6 @@ public class LetterControllerTest extends RestDocsTestSupport {
     }
 
     @Test
-    void 유저가_전체조회할때_조회할_편지가_없으면_에러가_발생한다() throws Exception {
-        User user = UserFixture.createUser();
-
-        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
-        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
-        willThrow(new LetterNotFoundException()).given(getAllLetterUseCase).execute(any(User.class));
-
-        mockMvc.perform(get("/letters")
-                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
-                        .accept(MediaType.APPLICATION_JSON)
-                )
-
-                .andExpect(status().isNotFound())
-
-                .andDo(restDocs.document());
-
-        verify(getAllLetterUseCase, times(1)).execute(any(User.class));
-    }
-
-    @Test
     void 유저가_편지를_단일_조회한다() throws Exception {
         Long letterId = 1L;
         User user = UserFixture.createUser();
