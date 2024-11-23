@@ -3,7 +3,7 @@ package com.bamdoliro.sinabro.application.auth;
 import com.bamdoliro.sinabro.domain.auth.service.GoogleAuthService;
 import com.bamdoliro.sinabro.infrastructure.oauth.google.feign.GoogleInformationWebClient;
 import com.bamdoliro.sinabro.infrastructure.oauth.google.feign.dto.response.GoogleInformation;
-import com.bamdoliro.sinabro.presentation.auth.dto.request.IdTokenRequest;
+import com.bamdoliro.sinabro.presentation.auth.dto.request.GoogleTokenRequest;
 import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,8 @@ public class GoogleAuthWebUseCase {
     private final GoogleAuthService googleAuthService;
 
     @Transactional
-    public TokenResponse execute(IdTokenRequest request) {
-        GoogleInformation information = googleInformationWebClient.getUserInformation("Bearer " + request.getIdToken());
+    public TokenResponse execute(GoogleTokenRequest request) {
+        GoogleInformation information = googleInformationWebClient.getUserInformation("Bearer " + request.getToken());
 
         return googleAuthService.execute(information);
     }

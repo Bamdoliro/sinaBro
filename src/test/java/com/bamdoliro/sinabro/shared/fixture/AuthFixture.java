@@ -8,6 +8,14 @@ public class AuthFixture {
         return "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount";
     }
 
+    public static String createGoogleToken() {
+        return "this_is_google_token";
+    }
+
+    public static String createGoogleIdToken() {
+        return "this_is_google_id_token";
+    }
+
     public static String createGoogleOAuthCode() {
         return "this_is_code";
     }

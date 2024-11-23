@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class IdTokenRequest {
+public class GoogleTokenRequest {
 
     @NotBlank(message = "필수값입니다.")
-    private String idToken;
+    private String token;
 }

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
-public class GetGoogleIdTokenUseCase {
+public class GetGoogleAccessTokenUseCase {
 
     private final GoogleAuthClient googleAuthClient;
     private final GoogleOAuthProperties googleOAuthProperties;
