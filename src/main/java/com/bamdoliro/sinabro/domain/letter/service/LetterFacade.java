@@ -17,8 +17,8 @@ public class LetterFacade {
     private final LetterRepository letterRepository;
 
     @Transactional(readOnly = true)
-    public Letter getLetter(Long id) {
-        return letterRepository.findById(id)
+    public Letter getLetter(User user, Long id) {
+        return letterRepository.findByUserAndId(user, id)
                 .orElseThrow(LetterNotFoundException::new);
     }
 
