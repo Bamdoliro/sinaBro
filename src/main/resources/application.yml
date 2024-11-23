@@ -11,7 +11,7 @@ spring:
 
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
   datasource:
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
@@ -27,10 +27,15 @@ spring:
 
 auth:
   google:
-    base-url: ${GOOGLE_BASE_URL}
-    client-id: ${GOOGLE_CLIENT_ID}
-    client-secret: ${GOOGLE_CLIENT_SECRET}
-    redirect-uri: ${GOOGLE_REDIRECT_URI}
+    web:
+      base-url: ${GOOGLE_WEB_BASE_URL}
+      client-id: ${GOOGLE_WEB_CLIENT_ID}
+      client-secret: ${GOOGLE_WEB_CLIENT_SECRET}
+      redirect-uri: ${GOOGLE_WEB_REDIRECT_URI}
+    android:
+      client-id: ${GOOGLE_ANDROID_CLIENT_ID}
+    ios:
+      client-id: ${GOOGLE_IOS_CLIENT_ID}
 
 jwt:
   refresh-expiration-time: 1296000000 # 15일
