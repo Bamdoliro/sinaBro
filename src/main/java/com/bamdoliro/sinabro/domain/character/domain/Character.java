@@ -33,7 +33,11 @@ public class Character extends BaseTimeEntity {
 
     public Character(CharacterType type, User user) {
         this.type = type;
-        this.friendship = 0;
+        this.friendship = 1;
         this.user = user;
+    }
+
+    public void incrementFriendship() {
+        this.friendship++;
     }
 }

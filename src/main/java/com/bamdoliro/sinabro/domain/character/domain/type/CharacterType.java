@@ -7,8 +7,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum CharacterType implements EnumProperty {
-    HEON("헌"),
-    SOL("솔");
+    SOL("솔", 1),
+    HEON("헌", 2);
 
     private final String description;
+    private final Integer id;
 }

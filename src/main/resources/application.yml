@@ -25,6 +25,14 @@ spring:
       port: ${REDIS_PORT}
       password: ${REDIS_PASSWORD}
 
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 60000
+            readTimeout: 300000
+
 auth:
   google:
     base-url: ${GOOGLE_BASE_URL}
@@ -37,3 +45,5 @@ jwt:
   access-expiration-time: 3600000 # 1시간
   prefix: Bearer
   secret-key: ${JWT_SECRET}
+
+
