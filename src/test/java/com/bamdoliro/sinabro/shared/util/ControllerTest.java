@@ -4,6 +4,11 @@ import com.bamdoliro.sinabro.application.auth.GoogleAuthLinkUseCase;
 import com.bamdoliro.sinabro.application.auth.GoogleAuthUseCase;
 import com.bamdoliro.sinabro.application.auth.LogOutUseCase;
 import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
+import com.bamdoliro.sinabro.application.auth.*;
+import com.bamdoliro.sinabro.application.diary.*;
+import com.bamdoliro.sinabro.domain.auth.service.TokenService;
+import com.bamdoliro.sinabro.presentation.auth.AuthController;
+import com.bamdoliro.sinabro.presentation.diary.DiaryController;
 import com.bamdoliro.sinabro.application.character.SelectCharacterUseCase;
 import com.bamdoliro.sinabro.application.diary.*;
 import com.bamdoliro.sinabro.application.fcm.token.DeleteFCMTokenUseCase;
@@ -13,8 +18,6 @@ import com.bamdoliro.sinabro.application.letter.GetAllLetterUseCase;
 import com.bamdoliro.sinabro.application.letter.GetLetterUseCase;
 import com.bamdoliro.sinabro.application.notification.QueryNotificationListUseCase;
 import com.bamdoliro.sinabro.application.notification.SendNotificationUseCase;
-import com.bamdoliro.sinabro.domain.auth.service.TokenService;
-import com.bamdoliro.sinabro.presentation.auth.AuthController;
 import com.bamdoliro.sinabro.presentation.character.CharacterController;
 import com.bamdoliro.sinabro.presentation.diary.DiaryController;
 import com.bamdoliro.sinabro.presentation.fcm.token.FCMTokenController;
@@ -60,7 +63,13 @@ public abstract class ControllerTest {
     protected GoogleAuthLinkUseCase googleAuthLinkUseCase;
 
     @MockBean
-    protected GoogleAuthUseCase googleAuthUseCase;
+    protected GetGoogleAccessTokenUseCase getGoogleAccessTokenUseCase;
+
+    @MockBean
+    protected GoogleAuthWebUseCase googleAuthWebUseCase;
+
+    @MockBean
+    protected GoogleAuthAppUseCase googleAuthAppUseCase;
 
     @MockBean
     protected RefreshAccessTokenUseCase refreshAccessTokenUseCase;
