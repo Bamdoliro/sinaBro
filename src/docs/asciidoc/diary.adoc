@@ -39,6 +39,28 @@ include::{snippets}/diary-controller-test/자신이_작성한_감정일기를_�
 ==== 응답
 include::{snippets}/diary-controller-test/자신이_작성한_감정일기를_전체_조회한다/http-response.adoc[]
 
+=== 감정일기 조회
+유저는 자신이 작성한 감정일기를 상세 조회할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/diary-controller-test/자신이_작성한_감정일기를_조회한다/request-headers.adoc[]
+
+===== Path Parameter
+include::{snippets}/diary-controller-test/자신이_작성한_감정일기를_조회한다/path-parameters.adoc[]
+
+==== 요청
+include::{snippets}/diary-controller-test/자신이_작성한_감정일기를_조회한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/diary-controller-test/자신이_작성한_감정일기를_조회한다/http-response.adoc[]
+
+===== 해당하는 감정일기가 없는 경우
+include::{snippets}/diary-controller-test/감정일기를_조회할_때_감정일기가_없으면_예외가_발생한다/http-response.adoc[]
+
 === 감정일기 수정
 유저는 자신이 작성한 감정일기를 수정할 수 있습니다.
 

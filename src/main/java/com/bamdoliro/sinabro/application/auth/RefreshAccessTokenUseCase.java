@@ -2,6 +2,8 @@ package com.bamdoliro.sinabro.application.auth;
 
 import com.bamdoliro.sinabro.domain.auth.domain.Token;
 import com.bamdoliro.sinabro.domain.auth.domain.type.TokenType;
+import com.bamdoliro.sinabro.domain.auth.exception.ExpiredTokenException;
+import com.bamdoliro.sinabro.domain.auth.exception.InvalidTokenException;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
 import com.bamdoliro.sinabro.infrastructure.persistence.auth.TokenRepository;
 import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
@@ -33,7 +35,7 @@ public class RefreshAccessTokenUseCase {
 
     private void validate(String token) {
         if (!Objects.equals(tokenService.getType(token), TokenType.REFRESH_TOKEN.name())) {
-            throw new IllegalArgumentException();
+            throw new InvalidTokenException();
         }
     }
 
@@ -48,7 +50,7 @@ public class RefreshAccessTokenUseCase {
 
     private void validate(String expectedToken, String actualToken) {
         if (!Objects.equals(expectedToken, actualToken)) {
-            throw new IllegalArgumentException();
+            throw new ExpiredTokenException();
         }
     }
 }
