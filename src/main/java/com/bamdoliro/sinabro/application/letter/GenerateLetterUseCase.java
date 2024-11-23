@@ -10,6 +10,7 @@ import com.bamdoliro.sinabro.infrastructure.ai.feign.dto.response.GenerateLetter
 import com.bamdoliro.sinabro.infrastructure.persistence.diary.DiaryRepository;
 import com.bamdoliro.sinabro.infrastructure.persistence.letter.LetterRepository;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
+import com.bamdoliro.sinabro.shared.response.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,14 +27,16 @@ public class GenerateLetterUseCase {
     private final CharacterFacade characterFacade;
 
     @Transactional
-    public void execute(User user) {
+    public IdResponse execute(User user) {
         Character character = characterFacade.getCharacter(user);
         List<EmotionAndKeyword> emotionAndKeywords = extractEmotionAndKeywords(user);
         GenerateLetterResponse response = aiService.generateLetter(character.getType().getId(), character.getFriendship(), emotionAndKeywords);
 
-        letterRepository.save(new Letter(response.getContent(), user));
+        Letter letter = letterRepository.save(new Letter(response.getContent(), user));
 
         character.increaseFriendShip();
+
+        return new IdResponse(letter);
     }
 
     private List<EmotionAndKeyword> extractEmotionAndKeywords(User user) {
