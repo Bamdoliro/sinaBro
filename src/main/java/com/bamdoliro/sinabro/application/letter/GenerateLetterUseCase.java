@@ -33,7 +33,7 @@ public class GenerateLetterUseCase {
 
         letterRepository.save(new Letter(response.getContent(), user));
 
-        character.incrementFriendship();
+        character.increaseFriendShip();
     }
 
     private List<EmotionAndKeyword> extractEmotionAndKeywords(User user) {
