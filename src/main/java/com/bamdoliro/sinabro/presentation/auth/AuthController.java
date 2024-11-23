@@ -32,7 +32,7 @@ public class AuthController {
         );
     }
 
-    @GetMapping("/google/code")
+    @GetMapping("/google")
     public SingleCommonResponse<String> getGoogleAccessToken(@RequestParam String code) {
         return CommonResponse.ok(
                 getGoogleAccessTokenUseCase.execute(code)
