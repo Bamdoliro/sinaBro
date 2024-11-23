@@ -11,6 +11,7 @@ import com.bamdoliro.sinabro.infrastructure.persistence.diary.DiaryRepository;
 import com.bamdoliro.sinabro.infrastructure.persistence.letter.LetterRepository;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +25,7 @@ public class GenerateLetterUseCase {
     private final AIService aiService;
     private final CharacterFacade characterFacade;
 
+    @Transactional
     public void execute(User user) {
         Character character = characterFacade.getCharacter(user);
         List<EmotionAndKeyword> emotionAndKeywords = extractEmotionAndKeywords(user);
