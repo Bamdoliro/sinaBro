@@ -16,3 +16,21 @@ include::{snippets}/character-controller-test/유저가_캐릭터를_선택한�
 
 ===== 캐릭터를 중복 선택할 경우
 include::{snippets}/character-controller-test/유저가_캐릭터를_다시_선택하면_에러가_발생한다/http-response.adoc[]
+
+=== 캐릭터 조회
+사용자는 자신이 선택한 캐릭터를 조회할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/character-controller-test/유저가_자신이_선택한_캐릭터를_조회한다/request-headers.adoc[]
+
+===== 요청
+include::{snippets}/character-controller-test/유저가_자신이_선택한_캐릭터를_조회한다/http-request.adoc[]
+
+==== 응답
+===== 정상 응답
+include::{snippets}/character-controller-test/유저가_자신이_선택한_캐릭터를_조회한다/http-response.adoc[]
+
+===== 유저가 선택한 캐릭터가 없는 경우
+include::{snippets}/character-controller-test/유저가_캐릭터를_다시_선택하면_에러가_발생한다/http-response.adoc[]
