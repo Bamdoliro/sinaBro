@@ -1,12 +1,9 @@
 package com.bamdoliro.sinabro.application.notification;
 
-import com.bamdoliro.sinabro.domain.fcm.token.service.FCMTokenFacade;
 import com.bamdoliro.sinabro.domain.notification.domain.Notification;
-import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.fcm.FCMService;
 import com.bamdoliro.sinabro.infrastructure.persistence.fcm.token.FCMTokenRepository;
 import com.bamdoliro.sinabro.infrastructure.persistence.notification.NotificationRepository;
-import com.bamdoliro.sinabro.infrastructure.persistence.user.UserRepository;
 import com.bamdoliro.sinabro.presentation.notification.dto.request.SendNotificationRequest;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;

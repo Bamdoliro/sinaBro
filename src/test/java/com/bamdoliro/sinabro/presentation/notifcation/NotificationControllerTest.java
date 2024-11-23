@@ -136,4 +136,60 @@ public class NotificationControllerTest extends RestDocsTestSupport {
 
         verify(queryNotificationListUseCase, times(1)).execute(any(User.class));
     }
+
+    @Test
+    void FCM_토큰을_가진_유저_전체에게_알림을_발송한다() throws Exception {
+        User user = UserFixture.createAdmin();
+        SendNotificationRequest request = new SendNotificationRequest("당신에게 편지가 왔어요.", "편지가 왔어요 어서 확인해보세요!");
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+
+        mockMvc.perform(post("/notifications/all")
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(request))
+                )
+
+                .andExpect(status().isNoContent())
+
+                .andDo(restDocs.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION)
+                                        .description("Bearer token")
+                        ),
+                        requestFields(
+                                fieldWithPath("title")
+                                        .description("알림 제목"),
+                                fieldWithPath("body")
+                                        .description("알림 내용")
+                        )
+                ));
+
+        verify(sendNotificationToAllUserUseCase, times(1)).execute(any(SendNotificationRequest.class));
+    }
+
+    @Test
+    void FCM_토큰을_가진_유저_전체에게_알림발송_과정에서_문제가_발생하면_에러가_발생한다() throws Exception {
+        User user = UserFixture.createAdmin();
+        SendNotificationRequest request = new SendNotificationRequest("당신에게 편지가 왔어요.", "편지가 왔어요 어서 확인해보세요!");
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willThrow(new FailedToSendException()).given(sendNotificationToAllUserUseCase).execute(any(SendNotificationRequest.class));
+
+        mockMvc.perform(post("/notifications/all")
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(request))
+                )
+
+                .andExpect(status().isInternalServerError())
+
+                .andDo(restDocs.document());
+
+        verify(sendNotificationToAllUserUseCase, times(1)).execute(any(SendNotificationRequest.class));
+    }
 }
