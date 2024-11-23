@@ -45,7 +45,7 @@ class AuthControllerTest extends RestDocsTestSupport {
     void 유저가_웹에서_구글_액세스_토큰을_발급받는다() throws Exception {
         given(getGoogleAccessTokenUseCase.execute(any(String.class))).willReturn(AuthFixture.createGoogleToken());
 
-        mockMvc.perform(get("/auth/google/code")
+        mockMvc.perform(get("/auth/google")
                 .queryParam("code", AuthFixture.createGoogleOAuthCode())
                 .accept(MediaType.APPLICATION_JSON)
         )
