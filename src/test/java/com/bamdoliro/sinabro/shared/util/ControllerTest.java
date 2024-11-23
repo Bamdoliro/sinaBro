@@ -4,19 +4,19 @@ import com.bamdoliro.sinabro.application.auth.GoogleAuthLinkUseCase;
 import com.bamdoliro.sinabro.application.auth.GoogleAuthUseCase;
 import com.bamdoliro.sinabro.application.auth.LogOutUseCase;
 import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
-import com.bamdoliro.sinabro.application.diary.*;
-import com.bamdoliro.sinabro.domain.auth.service.TokenService;
-import com.bamdoliro.sinabro.presentation.auth.AuthController;
-import com.bamdoliro.sinabro.presentation.diary.DiaryController;
 import com.bamdoliro.sinabro.application.character.SelectCharacterUseCase;
+import com.bamdoliro.sinabro.application.diary.*;
 import com.bamdoliro.sinabro.application.fcm.token.DeleteFCMTokenUseCase;
 import com.bamdoliro.sinabro.application.fcm.token.SaveFCMTokenUseCase;
+import com.bamdoliro.sinabro.application.letter.GenerateLetterUseCase;
 import com.bamdoliro.sinabro.application.notification.QueryNotificationListUseCase;
 import com.bamdoliro.sinabro.application.notification.SendNotificationUseCase;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
 import com.bamdoliro.sinabro.presentation.auth.AuthController;
 import com.bamdoliro.sinabro.presentation.character.CharacterController;
+import com.bamdoliro.sinabro.presentation.diary.DiaryController;
 import com.bamdoliro.sinabro.presentation.fcm.token.FCMTokenController;
+import com.bamdoliro.sinabro.presentation.letter.LetterController;
 import com.bamdoliro.sinabro.presentation.notification.NotificationController;
 import com.bamdoliro.sinabro.presentation.user.UserController;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationArgumentResolver;
@@ -39,6 +39,7 @@ import org.springframework.test.web.servlet.MockMvc;
         NotificationController.class,
         FCMTokenController.class,
         CharacterController.class,
+        LetterController.class,
         SharedController.class
 })
 public abstract class ControllerTest {
@@ -96,6 +97,10 @@ public abstract class ControllerTest {
 
     @MockBean
     protected SelectCharacterUseCase selectCharacterUseCase;
+
+    // Letter
+    @MockBean
+    protected GenerateLetterUseCase generateLetterUseCase;
 
     // Service
     @MockBean
