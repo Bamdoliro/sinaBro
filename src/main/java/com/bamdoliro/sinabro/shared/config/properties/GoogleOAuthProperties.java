@@ -8,10 +8,12 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties("auth")
-public class AuthProperties {
+@ConfigurationProperties("auth.google")
+public class GoogleOAuthProperties {
 
-    private OAuth google;
+    private OAuth web;
+    private OAuth android;
+    private OAuth ios;
 
     @Getter
     @Setter
@@ -20,21 +22,5 @@ public class AuthProperties {
         private String clientId;
         private String clientSecret;
         private String redirectUri;
-    }
-
-    public String getGoogleBaseUrl() {
-        return google.getBaseUrl();
-    }
-
-    public String getGoogleClientId() {
-        return google.getClientId();
-    }
-
-    public String getGoogleClientSecret() {
-        return google.getClientSecret();
-    }
-
-    public String getGoogleRedirectUri() {
-        return google.getRedirectUri();
     }
 }
