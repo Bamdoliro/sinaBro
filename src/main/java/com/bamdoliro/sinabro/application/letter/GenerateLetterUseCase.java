@@ -37,7 +37,7 @@ public class GenerateLetterUseCase {
     private List<EmotionAndKeyword> extractEmotionAndKeywords(User user) {
         return diaryRepository.findAllByAuthorAndWrittenAtAfter(user, LocalDate.now().minusWeeks(1))
                 .stream()
-                .map(diary -> new EmotionAndKeyword(diary.getAnalyzedEmotion(), diary.getKeyword()))
+                .map(EmotionAndKeyword::new)
                 .toList();
     }
 }
