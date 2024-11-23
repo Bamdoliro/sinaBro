@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateQuestionRequest {
+public class QuestionRequest {
 
     @NotBlank(message = "필수값입니다.")
     @Size(max = 64, message = "64글자 이하여야 합니다.")

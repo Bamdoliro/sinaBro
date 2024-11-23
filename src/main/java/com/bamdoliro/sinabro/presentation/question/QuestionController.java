@@ -3,8 +3,9 @@ package com.bamdoliro.sinabro.presentation.question;
 import com.bamdoliro.sinabro.application.question.CreateQuestionUseCase;
 import com.bamdoliro.sinabro.application.question.GetAllQuestionUseCase;
 import com.bamdoliro.sinabro.application.question.GetQuestionUseCase;
+import com.bamdoliro.sinabro.application.question.UpdateQuestionUseCase;
 import com.bamdoliro.sinabro.domain.user.domain.User;
-import com.bamdoliro.sinabro.presentation.question.dto.request.CreateQuestionRequest;
+import com.bamdoliro.sinabro.presentation.question.dto.request.QuestionRequest;
 import com.bamdoliro.sinabro.presentation.question.dto.response.ListQuestionResponse;
 import com.bamdoliro.sinabro.presentation.question.dto.response.QuestionResponse;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
@@ -26,12 +27,13 @@ public class QuestionController {
     private final CreateQuestionUseCase createQuestionUseCase;
     private final GetAllQuestionUseCase getAllQuestionUseCase;
     private final GetQuestionUseCase getQuestionUseCase;
+    private final UpdateQuestionUseCase updateQuestionUseCase;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public SingleCommonResponse<IdResponse> createQuestion(
             @AuthenticationPrincipal(authority = Authority.ADMIN) User user,
-            @RequestBody @Valid CreateQuestionRequest request
+            @RequestBody @Valid QuestionRequest request
     ) {
         return CommonResponse.ok(
                 createQuestionUseCase.execute(request)
@@ -53,4 +55,15 @@ public class QuestionController {
                 getQuestionUseCase.execute(questionId)
         );
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{question-id}")
+    public void updateQuestion(
+            @AuthenticationPrincipal(authority = Authority.ADMIN) User user,
+            @PathVariable(name = "question-id") Long questionId,
+            @RequestBody @Valid QuestionRequest request
+    ) {
+        updateQuestionUseCase.execute(questionId, request);
+    }
+
 }

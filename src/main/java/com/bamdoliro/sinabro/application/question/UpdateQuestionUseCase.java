@@ -1,23 +1,23 @@
 package com.bamdoliro.sinabro.application.question;
 
 import com.bamdoliro.sinabro.domain.question.domain.Question;
+import com.bamdoliro.sinabro.domain.question.service.QuestionFacade;
 import com.bamdoliro.sinabro.infrastructure.persistence.question.QuestionRepository;
 import com.bamdoliro.sinabro.presentation.question.dto.request.QuestionRequest;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
-import com.bamdoliro.sinabro.shared.response.IdResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @UseCase
-public class CreateQuestionUseCase {
+public class UpdateQuestionUseCase {
 
     private final QuestionRepository questionRepository;
+    private final QuestionFacade questionFacade;
 
-    public IdResponse execute(QuestionRequest request) {
-        Question question = questionRepository.save(
-                new Question(request.getTitle(), request.getContent())
-        );
-
-        return new IdResponse(question);
+    @Transactional
+    public void execute(Long id, QuestionRequest request) {
+        Question question = questionFacade.getQuestion(id);
+        question.update(request.getTitle(), request.getContent());
     }
 }
