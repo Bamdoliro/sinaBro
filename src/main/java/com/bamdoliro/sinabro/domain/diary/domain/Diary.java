@@ -5,6 +5,7 @@ import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.shared.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,16 +35,25 @@ public class Diary extends BaseTimeEntity {
     private List<Emotion> emotionList;
 
     @Column(nullable = false)
+    private String analyzedEmotion;
+
+    @Column(nullable = false)
+    private String keyword;
+
+    @Column(nullable = false)
     private LocalDate writtenAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
 
-    public Diary(String content, List<Emotion> emotionList, LocalDate writtenAt, User author) {
+    @Builder
+    public Diary(String content, List<Emotion> emotionList, LocalDate writtenAt, String analyzedEmotion, String keyword, User author) {
         this.content = content;
         this.emotionList = emotionList;
         this.writtenAt = writtenAt;
+        this.analyzedEmotion = analyzedEmotion;
+        this.keyword = keyword;
         this.author = author;
     }
 
@@ -51,8 +61,10 @@ public class Diary extends BaseTimeEntity {
         return author.equals(user);
     }
 
-    public void update(String content, List<Emotion> emotionList) {
+    public void update(String content, List<Emotion> emotionList, String analyzedEmotion, String keyword) {
         this.content = content;
         this.emotionList = emotionList;
+        this.analyzedEmotion = analyzedEmotion;
+        this.keyword = keyword;
     }
 }
