@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface GoogleInformationAppClient {
 
     @GetMapping
-    GoogleInformation getUserInformation(@RequestParam(name = "id_token")String id_token);
+    GoogleInformation getUserInformation(@RequestParam(name = "id_token") String id_token);
 }
