@@ -2,7 +2,6 @@ package com.bamdoliro.sinabro.application.letter;
 
 import com.bamdoliro.sinabro.domain.character.domain.Character;
 import com.bamdoliro.sinabro.domain.character.service.CharacterFacade;
-import com.bamdoliro.sinabro.domain.diary.domain.type.Emotion;
 import com.bamdoliro.sinabro.domain.letter.domain.Letter;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.ai.AIService;
@@ -14,7 +13,6 @@ import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor

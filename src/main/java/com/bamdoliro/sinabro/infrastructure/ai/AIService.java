@@ -1,6 +1,7 @@
 package com.bamdoliro.sinabro.infrastructure.ai;
 
-import com.bamdoliro.sinabro.domain.user.domain.User;
+import com.bamdoliro.sinabro.infrastructure.ai.exception.FailedToAnalyzeDiaryException;
+import com.bamdoliro.sinabro.infrastructure.ai.exception.FailedToGenerateLetterException;
 import com.bamdoliro.sinabro.infrastructure.ai.feign.AIClient;
 import com.bamdoliro.sinabro.infrastructure.ai.feign.dto.request.AnalyzeDiaryRequest;
 import com.bamdoliro.sinabro.infrastructure.ai.feign.dto.request.EmotionAndKeyword;
@@ -19,10 +20,18 @@ public class AIService {
     private final AIClient aiClient;
 
     public AnalyzeDiaryResponse analyzeDiary(String content) {
-        return aiClient.analyzeDiary(new AnalyzeDiaryRequest(content));
+        try {
+           return aiClient.analyzeDiary(new AnalyzeDiaryRequest(content));
+        } catch (Exception e) {
+            throw new FailedToAnalyzeDiaryException();
+        }
     }
 
     public GenerateLetterResponse generateLetter(Integer characterTypeId, Integer friendShip, List<EmotionAndKeyword> emotionAndKeywordList) {
-        return aiClient.generateLetter(new GenerateLetterRequest(characterTypeId, friendShip, emotionAndKeywordList));
+        try {
+            return aiClient.generateLetter(new GenerateLetterRequest(characterTypeId, friendShip, emotionAndKeywordList));
+        } catch(Exception e) {
+            throw new FailedToGenerateLetterException();
+        }
     }
 }
