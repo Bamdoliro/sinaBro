@@ -14,7 +14,7 @@ public class GoogleAuthLinkUseCase {
             "scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
 
     public String execute() {
-        return googleOAuthProperties.getWeb().getBaseUrl()
-                + String.format(QUERY_STRING, googleOAuthProperties.getWeb().getClientId(), googleOAuthProperties.getWeb().getRedirectUri());
+        return googleOAuthProperties.getGoogle().getBaseUrl()
+                + String.format(QUERY_STRING, googleOAuthProperties.getGoogle().getClientId(), googleOAuthProperties.getGoogle().getRedirectUri());
     }
 }

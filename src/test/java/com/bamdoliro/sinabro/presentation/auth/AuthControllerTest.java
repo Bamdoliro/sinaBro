@@ -42,13 +42,15 @@ class AuthControllerTest extends RestDocsTestSupport {
     }
 
     @Test
-    void 유저가_웹에서_구글_액세스_토큰을_발급받는다() throws Exception {
-        given(getGoogleAccessTokenUseCase.execute(any(String.class))).willReturn(AuthFixture.createGoogleToken());
+    void 유저가_웹에서_구글로_로그인한다() throws Exception {
+        TokenResponse response = new TokenResponse(AuthFixture.createAccessTokenString(), AuthFixture.createRefreshTokenString());
 
-        mockMvc.perform(get("/auth/google")
-                .queryParam("code", AuthFixture.createGoogleOAuthCode())
-                .accept(MediaType.APPLICATION_JSON)
-        )
+        given(googleAuthWebUseCase.execute(any(String.class))).willReturn(response);
+
+        mockMvc.perform(post("/auth/google/web")
+                        .queryParam("code", AuthFixture.createGoogleOAuthCode())
+                        .accept(MediaType.APPLICATION_JSON)
+                )
 
                 .andExpect(status().isOk())
 
@@ -58,33 +60,8 @@ class AuthControllerTest extends RestDocsTestSupport {
                                         .description("Google OAuth 인증 코드. 리다이렉트시 url에 포함됨")
                         )
                 ));
-        verify(getGoogleAccessTokenUseCase, times(1)).execute(any(String.class));
-    }
 
-    @Test
-    void 유저가_웹에서_구글로_로그인한다() throws Exception {
-        GoogleTokenRequest request = new GoogleTokenRequest(AuthFixture.createGoogleToken());
-        TokenResponse response = new TokenResponse(AuthFixture.createAccessTokenString(), AuthFixture.createRefreshTokenString());
-
-        given(googleAuthWebUseCase.execute(any(GoogleTokenRequest.class))).willReturn(response);
-
-        mockMvc.perform(post("/auth/google/web")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(request))
-                )
-
-                .andExpect(status().isOk())
-
-                .andDo(restDocs.document(
-                        requestFields(
-                                fieldWithPath("token")
-                                        .type(JsonFieldType.STRING)
-                                        .description("구글에서 발급받은 액세스 토큰 혹은 아이디 토큰")
-                        )
-                ));
-
-        verify(googleAuthWebUseCase, times(1)).execute(any(GoogleTokenRequest.class));
+        verify(googleAuthWebUseCase, times(1)).execute(any(String.class));
     }
 
     @Test
@@ -106,7 +83,7 @@ class AuthControllerTest extends RestDocsTestSupport {
                         requestFields(
                                 fieldWithPath("token")
                                         .type(JsonFieldType.STRING)
-                                        .description("구글에서 발급받은 액세스 토큰 혹은 아이디 토큰")
+                                        .description("구글에서 발급받은 아이디 토큰")
                         )
                 ));
 

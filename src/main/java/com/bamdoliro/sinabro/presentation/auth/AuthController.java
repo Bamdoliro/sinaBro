@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final GoogleAuthLinkUseCase googleAuthLinkUseCase;
-    private final GetGoogleAccessTokenUseCase getGoogleAccessTokenUseCase;
     private final RefreshAccessTokenUseCase refreshAccessTokenUseCase;
     private final LogOutUseCase logOutUseCase;
     private final GoogleAuthWebUseCase googleAuthWebUseCase;
@@ -32,17 +31,10 @@ public class AuthController {
         );
     }
 
-    @GetMapping("/google")
-    public SingleCommonResponse<String> getGoogleAccessToken(@RequestParam String code) {
-        return CommonResponse.ok(
-                getGoogleAccessTokenUseCase.execute(code)
-        );
-    }
-
     @PostMapping("/google/web")
-    public SingleCommonResponse<TokenResponse> authWithGoogleWeb(@RequestBody @Valid GoogleTokenRequest request) {
+    public SingleCommonResponse<TokenResponse> authWithGoogleWeb(@RequestParam String code) {
         return CommonResponse.ok(
-                googleAuthWebUseCase.execute(request)
+                googleAuthWebUseCase.execute(code)
         );
     }
 
@@ -62,9 +54,7 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping
-    public void logOut(
-            @AuthenticationPrincipal User user
-    ) {
+    public void logOut(@AuthenticationPrincipal User user) {
         logOutUseCase.execute(user);
     }
 }
