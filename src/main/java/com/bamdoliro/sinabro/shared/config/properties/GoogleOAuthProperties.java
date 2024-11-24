@@ -8,12 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties("auth.google")
+@ConfigurationProperties("auth")
 public class GoogleOAuthProperties {
 
-    private OAuth web;
-    private OAuth android;
-    private OAuth ios;
+    private OAuth google;
 
     @Getter
     @Setter
