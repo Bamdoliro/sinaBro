@@ -23,4 +23,8 @@ include::character.adoc[]
 
 include::diary.adoc[]
 
+include::letter.adoc[]
+
+include::question.adoc[]
+
 include::enum.adoc[]
