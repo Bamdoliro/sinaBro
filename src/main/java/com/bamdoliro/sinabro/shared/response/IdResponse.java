@@ -18,6 +18,7 @@ public class IdResponse {
 
     public IdResponse(Letter letter) {
         this.id = letter.getId();
+    }
 
     public IdResponse(Question question) {
         this.id = question.getId();
