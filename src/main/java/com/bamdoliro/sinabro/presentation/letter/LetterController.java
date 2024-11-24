@@ -7,6 +7,7 @@ import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.letter.dto.response.LetterResponse;
 import com.bamdoliro.sinabro.presentation.letter.dto.response.ListLetterResponse;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
+import com.bamdoliro.sinabro.shared.response.IdResponse;
 import com.bamdoliro.sinabro.shared.response.ListCommonResponse;
 import com.bamdoliro.sinabro.shared.response.SingleCommonResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +25,10 @@ public class LetterController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void generateLetter(
+    public IdResponse generateLetter(
             @AuthenticationPrincipal User user
     ) {
-        generateLetterUseCase.execute(user);
+        return generateLetterUseCase.execute(user);
     }
 
     @GetMapping
