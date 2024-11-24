@@ -2,9 +2,12 @@ package com.bamdoliro.sinabro.presentation.character;
 
 import com.bamdoliro.sinabro.domain.character.domain.type.CharacterType;
 import com.bamdoliro.sinabro.domain.character.exception.CharacterAlreadySelectedException;
+import com.bamdoliro.sinabro.domain.character.exception.CharacterNotFoundException;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.character.dto.request.SelectCharacterRequest;
+import com.bamdoliro.sinabro.presentation.character.dto.response.CharacterResponse;
 import com.bamdoliro.sinabro.shared.fixture.AuthFixture;
+import com.bamdoliro.sinabro.shared.fixture.CharacterFixture;
 import com.bamdoliro.sinabro.shared.fixture.UserFixture;
 import com.bamdoliro.sinabro.shared.util.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
@@ -16,6 +19,7 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -73,5 +77,51 @@ public class CharacterControllerTest extends RestDocsTestSupport {
                 .andExpect(status().isConflict())
 
                 .andDo(restDocs.document());
+    }
+
+    @Test
+    void 유저가_자신이_선택한_캐릭터를_조회한다() throws Exception {
+        User user = UserFixture.createUser();
+        CharacterResponse response = CharacterFixture.createCharacterResponse();
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        given(getCharacterUseCase.execute(any(User.class))).willReturn(response);
+
+        mockMvc.perform(get("/characters")
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+
+                .andExpect(status().isOk())
+
+                .andDo(restDocs.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION)
+                                        .description("Bearer token")
+                        )
+                ));
+
+        verify(getCharacterUseCase, times(1)).execute(any(User.class));
+    }
+
+    @Test
+    void 유저가_캐릭터를_조회할때_캐릭터가_없으면_에러가_발생한다() throws Exception {
+        User user = UserFixture.createUser();
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willThrow(new CharacterNotFoundException()).given(getCharacterUseCase).execute(any(User.class));
+
+        mockMvc.perform(get("/characters")
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+
+                .andExpect(status().isNotFound())
+
+                .andDo(restDocs.document());
+
+        verify(getCharacterUseCase, times(1)).execute(any(User.class));
     }
 }
