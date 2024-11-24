@@ -6,6 +6,7 @@ import com.bamdoliro.sinabro.application.auth.RefreshAccessTokenUseCase;
 import com.bamdoliro.sinabro.application.auth.*;
 import com.bamdoliro.sinabro.application.character.GetCharacterUseCase;
 import com.bamdoliro.sinabro.application.diary.*;
+import com.bamdoliro.sinabro.application.question.*;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
 import com.bamdoliro.sinabro.presentation.auth.AuthController;
 import com.bamdoliro.sinabro.presentation.diary.DiaryController;
@@ -21,6 +22,7 @@ import com.bamdoliro.sinabro.presentation.character.CharacterController;
 import com.bamdoliro.sinabro.presentation.fcm.token.FCMTokenController;
 import com.bamdoliro.sinabro.presentation.letter.LetterController;
 import com.bamdoliro.sinabro.presentation.notification.NotificationController;
+import com.bamdoliro.sinabro.presentation.question.QuestionController;
 import com.bamdoliro.sinabro.presentation.user.UserController;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationArgumentResolver;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationExtractor;
@@ -42,6 +44,7 @@ import org.springframework.test.web.servlet.MockMvc;
         NotificationController.class,
         FCMTokenController.class,
         CharacterController.class,
+        QuestionController.class,
         LetterController.class,
         SharedController.class
 })
@@ -107,6 +110,22 @@ public abstract class ControllerTest {
     // Character
     @MockBean
     protected SelectCharacterUseCase selectCharacterUseCase;
+
+    // Question
+    @MockBean
+    protected CreateQuestionUseCase createQuestionUseCase;
+
+    @MockBean
+    protected GetAllQuestionUseCase getAllQuestionUseCase;
+
+    @MockBean
+    protected GetQuestionUseCase getQuestionUseCase;
+
+    @MockBean
+    protected UpdateQuestionUseCase updateQuestionUseCase;
+
+    @MockBean
+    protected DeleteQuestionUseCase deleteQuestionUseCase;
 
     @MockBean
     protected GetCharacterUseCase getCharacterUseCase;
