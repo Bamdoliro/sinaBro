@@ -1,6 +1,6 @@
 package com.bamdoliro.sinabro.application.answer;
 
-import com.bamdoliro.sinabro.domain.answer.Answer;
+import com.bamdoliro.sinabro.domain.answer.domain.Answer;
 import com.bamdoliro.sinabro.domain.inquiry.domain.Inquiry;
 import com.bamdoliro.sinabro.domain.inquiry.domain.service.InquiryFacade;
 import com.bamdoliro.sinabro.domain.user.domain.User;

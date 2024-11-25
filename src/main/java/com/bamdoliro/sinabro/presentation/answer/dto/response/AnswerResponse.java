@@ -1,6 +1,6 @@
 package com.bamdoliro.sinabro.presentation.answer.dto.response;
 
-import com.bamdoliro.sinabro.domain.answer.Answer;
+import com.bamdoliro.sinabro.domain.answer.domain.Answer;
 import com.bamdoliro.sinabro.presentation.user.dto.response.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class AnswerResponse {
+
+    private Long id;
     private String content;
     private UserResponse user;
     private LocalDateTime createdAt;

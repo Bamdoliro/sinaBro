@@ -1,4 +1,4 @@
-package com.bamdoliro.sinabro.domain.answer;
+package com.bamdoliro.sinabro.domain.answer.domain;
 
 import com.bamdoliro.sinabro.domain.inquiry.domain.Inquiry;
 import com.bamdoliro.sinabro.domain.user.domain.User;
@@ -33,5 +33,13 @@ public class Answer extends BaseTimeEntity {
         this.content = content;
         this.inquiry = inquiry;
         this.user = user;
+    }
+
+    public boolean isOwner(User user) {
+        return this.user.equals(user);
+    }
+
+    public void update(String content) {
+        this.content = content;
     }
 }

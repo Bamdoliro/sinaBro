@@ -1,6 +1,6 @@
 package com.bamdoliro.sinabro.shared.response;
 
-import com.bamdoliro.sinabro.domain.answer.Answer;
+import com.bamdoliro.sinabro.domain.answer.domain.Answer;
 import com.bamdoliro.sinabro.domain.diary.domain.Diary;
 import com.bamdoliro.sinabro.domain.inquiry.domain.Inquiry;
 import com.bamdoliro.sinabro.domain.letter.domain.Letter;
