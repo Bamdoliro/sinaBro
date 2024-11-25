@@ -4,6 +4,7 @@ import com.bamdoliro.sinabro.application.inquiry.user.CreateInquiryUseCase;
 import com.bamdoliro.sinabro.application.inquiry.user.GetAllUserInquiriesUseCase;
 import com.bamdoliro.sinabro.application.inquiry.user.GetUserInquiryUseCase;
 import com.bamdoliro.sinabro.application.inquiry.user.UpdateInquiryUseCase;
+import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.inquiry.user.dto.request.InquiryRequest;
 import com.bamdoliro.sinabro.presentation.inquiry.user.dto.response.ListUserInquiryResponse;
@@ -40,10 +41,11 @@ public class UserInquiryController {
 
     @GetMapping
     public ListCommonResponse<ListUserInquiryResponse> getAllInquiries(
-            @AuthenticationPrincipal(authority = Authority.USER) User user
-    ) {
+            @AuthenticationPrincipal(authority = Authority.USER) User user,
+            @RequestParam(required = false) InquiryStatus status
+            ) {
         return CommonResponse.ok(
-                getAllUserInquiriesUseCase.execute(user)
+                getAllUserInquiriesUseCase.execute(user, status)
         );
     }
 
