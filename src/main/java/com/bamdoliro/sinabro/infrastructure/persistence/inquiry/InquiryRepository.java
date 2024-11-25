@@ -16,4 +16,11 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
             "where i.user = :user " +
             "and (:status is null or i.status = :status)")
     List<Inquiry> findAllByUserAndStatus(@Param("user") User user, @Param("status") InquiryStatus status);
+
+    @Query("select i " +
+            "from Inquiry i " +
+            "where (:status is null or i.status = :status)")
+    List<Inquiry> findAllByStatus(@Param("status") InquiryStatus status);
+
+    Long id(Long id);
 }
