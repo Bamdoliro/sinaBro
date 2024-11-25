@@ -1,5 +1,6 @@
 package com.bamdoliro.sinabro.shared.response;
 
+import com.bamdoliro.sinabro.domain.answer.Answer;
 import com.bamdoliro.sinabro.domain.diary.domain.Diary;
 import com.bamdoliro.sinabro.domain.inquiry.domain.Inquiry;
 import com.bamdoliro.sinabro.domain.letter.domain.Letter;
@@ -27,5 +28,9 @@ public class IdResponse {
 
     public IdResponse(Inquiry inquiry) {
         this.id = inquiry.getId();
+    }
+
+    public IdResponse(Answer answer) {
+        this.id = answer.getId();
     }
 }
