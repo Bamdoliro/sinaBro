@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 public enum InquiryStatus implements EnumProperty {
     WAITING("대기"),
     IN_PROGRESS("진행"),
-    ON_HOLD("중단"),
     COMPLETED("완료")
     ;
 
