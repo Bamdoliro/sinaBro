@@ -44,4 +44,8 @@ public class Inquiry extends BaseTimeEntity {
         this.answerList = new ArrayList<>();
         this.user = user;
     }
+
+    public boolean isOwner(User user) {
+        return this.user.equals(user);
+    }
 }
