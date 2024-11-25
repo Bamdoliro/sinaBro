@@ -1,7 +1,8 @@
-package com.bamdoliro.sinabro.presentation.inquiry.user.dto.response;
+package com.bamdoliro.sinabro.presentation.inquiry.admin.dto.response;
 
 import com.bamdoliro.sinabro.domain.inquiry.domain.Inquiry;
 import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
+import com.bamdoliro.sinabro.presentation.inquiry.user.dto.response.AnswerResponse;
 import com.bamdoliro.sinabro.presentation.user.dto.response.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

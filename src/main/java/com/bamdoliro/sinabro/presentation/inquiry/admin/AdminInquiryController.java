@@ -6,8 +6,8 @@ import com.bamdoliro.sinabro.application.inquiry.admin.UpdateInquiryStatusUseCas
 import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.inquiry.admin.dto.request.UpdateInquiryStatusRequest;
+import com.bamdoliro.sinabro.presentation.inquiry.admin.dto.response.InquiryAdminResponse;
 import com.bamdoliro.sinabro.presentation.inquiry.admin.dto.response.ListInquiryAdminResponse;
-import com.bamdoliro.sinabro.presentation.inquiry.user.dto.response.InquiryAdminResponse;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
 import com.bamdoliro.sinabro.shared.auth.Authority;
 import com.bamdoliro.sinabro.shared.response.CommonResponse;
