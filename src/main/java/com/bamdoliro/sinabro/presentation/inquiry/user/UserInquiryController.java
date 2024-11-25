@@ -4,8 +4,8 @@ import com.bamdoliro.sinabro.application.inquiry.user.*;
 import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.inquiry.user.dto.request.InquiryRequest;
-import com.bamdoliro.sinabro.presentation.inquiry.user.dto.response.ListUserInquiryResponse;
-import com.bamdoliro.sinabro.presentation.inquiry.user.dto.response.UserInquiryResponse;
+import com.bamdoliro.sinabro.presentation.inquiry.user.dto.response.InquiryUserResponse;
+import com.bamdoliro.sinabro.presentation.inquiry.user.dto.response.ListInquiryUserResponse;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
 import com.bamdoliro.sinabro.shared.auth.Authority;
 import com.bamdoliro.sinabro.shared.response.CommonResponse;
@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserInquiryController {
 
     private final CreateInquiryUseCase createInquiryUseCase;
-    private final GetAllUserInquiriesUseCase getAllUserInquiriesUseCase;
-    private final GetUserInquiryUseCase getUserInquiryUseCase;
+    private final GetAllInquiriesUserUseCase getAllInquiriesUserUseCase;
+    private final GetInquiryUserUseCase getInquiryUserUseCase;
     private final UpdateInquiryUseCase updateInquiryUseCase;
     private final DeleteInquiryUseCase deleteInquiryUseCase;
 
@@ -38,22 +38,22 @@ public class UserInquiryController {
     }
 
     @GetMapping
-    public ListCommonResponse<ListUserInquiryResponse> getAllInquiries(
+    public ListCommonResponse<ListInquiryUserResponse> getAllInquiries(
             @AuthenticationPrincipal(authority = Authority.USER) User user,
             @RequestParam(required = false) InquiryStatus status
-            ) {
+    ) {
         return CommonResponse.ok(
-                getAllUserInquiriesUseCase.execute(user, status)
+                getAllInquiriesUserUseCase.execute(user, status)
         );
     }
 
     @GetMapping("/{inquiry-id}")
-    public SingleCommonResponse<UserInquiryResponse> getInquiry(
+    public SingleCommonResponse<InquiryUserResponse> getInquiry(
             @AuthenticationPrincipal(authority = Authority.USER) User user,
             @PathVariable(name = "inquiry-id") Long inquiryId
     ) {
         return CommonResponse.ok(
-                getUserInquiryUseCase.execute(user, inquiryId)
+                getInquiryUserUseCase.execute(user, inquiryId)
         );
     }
 
