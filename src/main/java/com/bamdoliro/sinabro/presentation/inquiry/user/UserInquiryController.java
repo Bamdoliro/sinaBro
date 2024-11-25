@@ -1,9 +1,6 @@
 package com.bamdoliro.sinabro.presentation.inquiry.user;
 
-import com.bamdoliro.sinabro.application.inquiry.user.CreateInquiryUseCase;
-import com.bamdoliro.sinabro.application.inquiry.user.GetAllUserInquiriesUseCase;
-import com.bamdoliro.sinabro.application.inquiry.user.GetUserInquiryUseCase;
-import com.bamdoliro.sinabro.application.inquiry.user.UpdateInquiryUseCase;
+import com.bamdoliro.sinabro.application.inquiry.user.*;
 import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.inquiry.user.dto.request.InquiryRequest;
@@ -29,6 +26,7 @@ public class UserInquiryController {
     private final GetAllUserInquiriesUseCase getAllUserInquiriesUseCase;
     private final GetUserInquiryUseCase getUserInquiryUseCase;
     private final UpdateInquiryUseCase updateInquiryUseCase;
+    private final DeleteInquiryUseCase deleteInquiryUseCase;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -67,5 +65,14 @@ public class UserInquiryController {
             @RequestBody @Valid InquiryRequest request
     ) {
         updateInquiryUseCase.execute(user, inquiryId, request);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{inquiry-id}")
+    public void deleteInquiry(
+            @AuthenticationPrincipal(authority = Authority.USER) User user,
+            @PathVariable(name = "inquiry-id") Long inquiryId
+    ) {
+        deleteInquiryUseCase.execute(user, inquiryId);
     }
 }
