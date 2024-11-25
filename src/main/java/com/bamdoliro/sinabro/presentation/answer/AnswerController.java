@@ -1,6 +1,7 @@
 package com.bamdoliro.sinabro.presentation.answer;
 
 import com.bamdoliro.sinabro.application.answer.CreateAnswerUseCase;
+import com.bamdoliro.sinabro.application.answer.DeleteAnswerUseCase;
 import com.bamdoliro.sinabro.application.answer.UpdateAnswerUseCase;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.answer.dto.request.AnswerRequest;
@@ -19,6 +20,7 @@ public class AnswerController {
 
     private final CreateAnswerUseCase createAnswerUseCase;
     private final UpdateAnswerUseCase updateAnswerUseCase;
+    private final DeleteAnswerUseCase deleteAnswerUseCase;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{inquiry-id}")
@@ -38,5 +40,14 @@ public class AnswerController {
             @RequestBody @Valid AnswerRequest request
     ) {
         updateAnswerUseCase.execute(user, answerId, request);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{answer-id}")
+    public void deleteAnswer(
+            @AuthenticationPrincipal(authority = Authority.ADMIN) User user,
+            @PathVariable(name = "answer-id") Long answerId
+    ) {
+        deleteAnswerUseCase.execute(user, answerId);
     }
 }

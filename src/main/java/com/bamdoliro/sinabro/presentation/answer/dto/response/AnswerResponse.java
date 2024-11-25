@@ -18,6 +18,7 @@ public class AnswerResponse {
     private LocalDateTime updatedAt;
 
     public AnswerResponse(Answer answer) {
+        this.id = answer.getId();
         this.content = answer.getContent();
         this.user = new UserResponse(answer.getUser());
         this.createdAt = answer.getCreatedAt();
