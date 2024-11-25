@@ -36,6 +36,9 @@ include::{snippets}/notification-controller-test/fcm_토큰을_가진_유저_전
 ===== Request Body
 include::{snippets}/notification-controller-test/fcm_토큰을_가진_유저_전체에게_알림을_발송한다/request-fields.adoc[]
 
+==== 요청
+include::{snippets}/notification-controller-test/fcm_토큰을_가진_유저_전체에게_알림을_발송한다/http-request.adoc[]
+
 ==== 응답
 
 ===== 정상 응답
