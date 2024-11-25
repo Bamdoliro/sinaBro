@@ -1,5 +1,6 @@
 package com.bamdoliro.sinabro.domain.inquiry.domain;
 
+import com.bamdoliro.sinabro.domain.answer.Answer;
 import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.shared.entity.BaseTimeEntity;

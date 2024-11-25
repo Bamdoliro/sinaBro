@@ -1,5 +1,6 @@
-package com.bamdoliro.sinabro.domain.inquiry.domain;
+package com.bamdoliro.sinabro.domain.answer;
 
+import com.bamdoliro.sinabro.domain.inquiry.domain.Inquiry;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.shared.entity.BaseTimeEntity;
 import jakarta.persistence.*;

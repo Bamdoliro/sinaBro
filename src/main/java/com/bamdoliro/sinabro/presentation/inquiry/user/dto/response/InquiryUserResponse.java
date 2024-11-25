@@ -2,6 +2,7 @@ package com.bamdoliro.sinabro.presentation.inquiry.user.dto.response;
 
 import com.bamdoliro.sinabro.domain.inquiry.domain.Inquiry;
 import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
+import com.bamdoliro.sinabro.presentation.answer.dto.response.AnswerResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
