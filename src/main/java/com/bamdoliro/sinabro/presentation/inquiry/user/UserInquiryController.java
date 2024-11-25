@@ -63,8 +63,9 @@ public class UserInquiryController {
     @PutMapping("/{inquiry-id}")
     public void updateInquiry(
             @AuthenticationPrincipal(authority = Authority.USER) User user,
-            @PathVariable(name = "inquiry-id") Long inquiryId
+            @PathVariable(name = "inquiry-id") Long inquiryId,
+            @RequestBody @Valid InquiryRequest request
     ) {
-        updateInquiryUseCase.execute(user, inquiryId);
+        updateInquiryUseCase.execute(user, inquiryId, request);
     }
 }

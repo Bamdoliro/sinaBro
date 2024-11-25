@@ -45,6 +45,11 @@ public class Inquiry extends BaseTimeEntity {
         this.user = user;
     }
 
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public boolean isOwner(User user) {
         return this.user.equals(user);
     }

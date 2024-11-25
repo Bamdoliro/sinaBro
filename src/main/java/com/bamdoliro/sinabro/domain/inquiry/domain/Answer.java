@@ -18,7 +18,7 @@ public class Answer extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false, columnDefinition = "TEXT", length = 3000)
-    private String answer;
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inquiry_id", nullable = false)
@@ -28,8 +28,8 @@ public class Answer extends BaseTimeEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Answer(String answer, Inquiry inquiry, User user) {
-        this.answer = answer;
+    public Answer(String content, Inquiry inquiry, User user) {
+        this.content = content;
         this.inquiry = inquiry;
         this.user = user;
     }
