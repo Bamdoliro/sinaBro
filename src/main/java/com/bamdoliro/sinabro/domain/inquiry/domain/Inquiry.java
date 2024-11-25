@@ -6,6 +6,7 @@ import com.bamdoliro.sinabro.shared.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class Inquiry extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "TEXT", length = 3000)
     private String content;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private InquiryStatus status;
