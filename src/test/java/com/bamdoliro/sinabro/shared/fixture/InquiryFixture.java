@@ -3,6 +3,7 @@ package com.bamdoliro.sinabro.shared.fixture;
 import com.bamdoliro.sinabro.domain.inquiry.domain.Inquiry;
 import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
 import com.bamdoliro.sinabro.presentation.answer.dto.response.AnswerResponse;
+import com.bamdoliro.sinabro.presentation.inquiry.admin.dto.request.UpdateInquiryStatusRequest;
 import com.bamdoliro.sinabro.presentation.inquiry.admin.dto.response.InquiryAdminResponse;
 import com.bamdoliro.sinabro.presentation.inquiry.admin.dto.response.ListInquiryAdminResponse;
 import com.bamdoliro.sinabro.presentation.inquiry.user.dto.request.InquiryRequest;
@@ -75,6 +76,12 @@ public class InquiryFixture {
                 new UserResponse(UserFixture.createUser()),
                 LocalDateTime.now(),
                 LocalDateTime.now()
+        );
+    }
+
+    public static UpdateInquiryStatusRequest createUpdateInquiryStatusRequest() {
+        return new UpdateInquiryStatusRequest(
+                InquiryStatus.IN_PROGRESS
         );
     }
 }
