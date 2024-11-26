@@ -1,5 +1,6 @@
 package com.bamdoliro.sinabro.presentation.inquiry.user;
 
+import com.bamdoliro.sinabro.domain.auth.exception.AuthorityMismatchException;
 import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
 import com.bamdoliro.sinabro.domain.inquiry.exception.InquiryNotFoundException;
 import com.bamdoliro.sinabro.domain.inquiry.exception.InvalidInquiryStateException;
@@ -152,6 +153,28 @@ class UserInquiryControllerTest extends RestDocsTestSupport {
 
         verify(getInquiryUserUseCase, times(1)).execute(user, inquiryId);
     }
+    
+    @Test
+    void 문의를_상세_조회할_때_본인의_문의가_아니면_예외가_발생한다() throws Exception {
+        User user = UserFixture.createUser();
+        Long inquiryId = 1L;
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        given(getInquiryUserUseCase.execute(user, inquiryId)).willThrow(new AuthorityMismatchException());
+
+        mockMvc.perform(get("/user/inquiries/{inquiry-id}", inquiryId)
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                .andExpect(status().isForbidden())
+
+                .andDo(restDocs.document());
+
+        verify(getInquiryUserUseCase, times(1)).execute(user, inquiryId);
+    }
 
     @Test
     void 자신이_작성한_문의를_수정한다() throws Exception {
@@ -241,6 +264,30 @@ class UserInquiryControllerTest extends RestDocsTestSupport {
     }
 
     @Test
+    void 문의를_수정할_때_본인의_문의가_아니면_예외가_발생한다() throws Exception {
+        User user = UserFixture.createUser();
+        Long inquiryId = 1L;
+        InquiryRequest request = InquiryFixture.createInquiryRequest();
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willThrow(new AuthorityMismatchException()).given(updateInquiryUseCase).execute(any(User.class), anyLong(), any(InquiryRequest.class));
+
+        mockMvc.perform(put("/user/inquiries/{inquiry-id}", inquiryId)
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(request))
+                )
+
+                .andExpect(status().isForbidden())
+
+                .andDo(restDocs.document());
+
+        verify(updateInquiryUseCase, times(1)).execute(any(User.class), anyLong(), any(InquiryRequest.class));
+    }
+
+    @Test
     void 자신이_작성한_문의를_삭제한다() throws Exception {
         User user = UserFixture.createUser();
         Long inquiryId = 1L;
@@ -306,6 +353,28 @@ class UserInquiryControllerTest extends RestDocsTestSupport {
                 )
 
                 .andExpect(status().isConflict())
+
+                .andDo(restDocs.document());
+
+        verify(deleteInquiryUseCase, times(1)).execute(user, inquiryId);
+    }
+
+    @Test
+    void 문의를_삭제할_때_본인의_문의가_아니면_예외가_발생한다() throws Exception {
+        User user = UserFixture.createUser();
+        Long inquiryId = 1L;
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willThrow(new AuthorityMismatchException()).given(deleteInquiryUseCase).execute(user, inquiryId);
+
+        mockMvc.perform(delete("/user/inquiries/{inquiry-id}", inquiryId)
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                .andExpect(status().isForbidden())
 
                 .andDo(restDocs.document());
 

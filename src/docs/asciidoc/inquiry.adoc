@@ -1,0 +1,186 @@
+== 문의 Inquiry
+
+=== 문의 생성
+유저 권한을 가진 사용자가 제목과 내용을 입력해 문의를 생성할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/user-inquiry-controller-test/문의를_생성한다/request-headers.adoc[]
+
+===== Request Body
+include::{snippets}/user-inquiry-controller-test/문의를_생성한다/request-fields.adoc[]
+
+==== 요청
+include::{snippets}/user-inquiry-controller-test/문의를_생성한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/user-inquiry-controller-test/문의를_생성한다/http-response.adoc[]
+
+=== 유저 - 문의 전체 조회
+유저가 자신이 작성한 문의를 전체 조회할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_전체_조회한다/request-headers.adoc[]
+
+===== Query Parameter
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_전체_조회한다/query-parameters.adoc[]
+
+==== 요청
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_전체_조회한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_전체_조회한다/http-response.adoc[]
+
+=== 유저 - 문의 상세 조회
+유저가 자신이 작성한 문의를 상세 조회할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_상세_조회한다/request-headers.adoc[]
+
+===== Path Parameter
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_상세_조회한다/path-parameters.adoc[]
+
+==== 요청
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_상세_조회한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_상세_조회한다/http-response.adoc[]
+
+===== 문의를 찾을 수 없는 경우
+include::{snippets}/user-inquiry-controller-test/문의를_상세_조회할_때_문의가_없으면_예외가_발생한다/http-response.adoc[]
+
+===== 본인의 문의가 아닌 경우
+include::{snippets}/user-inquiry-controller-test/문의를_상세_조회할_때_본인의_문의가_아니면_예외가_발생한다/http-response.adoc[]
+
+=== 문의 수정
+유저는 자신이 작성한 감정일기를 수정할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_수정한다/request-headers.adoc[]
+
+===== Path Parameter
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_수정한다/path-parameters.adoc[]
+
+===== Request Body
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_수정한다/request-fields.adoc[]
+
+==== 요청
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_수정한다/http-response.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_수정한다/http-response.adoc[]
+
+===== 문의를 찾을 수 없는 경우
+include::{snippets}/user-inquiry-controller-test/문의를_수정할_때_문의가_없으면_예외가_발생한다/http-response.adoc[]
+
+===== 본인의 문의가 아닌 경우
+include::{snippets}/user-inquiry-controller-test/문의를_수정할_때_본인의_문의가_아니면_예외가_발생한다/http-response.adoc[]
+
+===== 문의가 진행중이거나 완료된 경우
+include::{snippets}/user-inquiry-controller-test/문의를_수정할_때_문의의_상태가_진행중이거나_완료라면_예외가_발생한다/http-response.adoc[]
+
+=== 문의 삭제
+유저는 자신이 작성한 문의를 삭제할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_삭제한다/request-headers.adoc[]
+
+===== Path Parameter
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_삭제한다/path-parameters.adoc[]
+
+==== 요청
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_삭제한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/user-inquiry-controller-test/자신이_작성한_문의를_삭제한다/http-response.adoc[]
+
+===== 문의를 찾을 수 없는 경우
+include::{snippets}/user-inquiry-controller-test/문의를_삭제할_때_문의가_없으면_예외가_발생한다/http-response.adoc[]
+
+===== 본인의 문의가 아닌 경우
+include::{snippets}/user-inquiry-controller-test/문의를_삭제할_때_본인의_문의가_아니면_예외가_발생한다/http-response.adoc[]
+
+===== 문의가 진행중이거나 완료된 경우
+include::{snippets}/user-inquiry-controller-test/문의를_삭제할_때_문의의_상태가_진행중이거나_완료라면_예외가_발생한다/http-response.adoc[]
+
+=== 어드민 - 문의 전체 조회
+어드민은 모든 유저가 작성한 문의를 전체 조회할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의를_전체_조회한다/request-headers.adoc[]
+
+===== Query Parameter
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의를_전체_조회한다/query-parameters.adoc[]
+
+==== 요청
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의를_전체_조회한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의를_전체_조회한다/http-response.adoc[]
+
+=== 어드민 - 문의 상세 조회
+어드민은 모든 유저가 작성한 문의를 상세조회할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의를_상세_조회한다/request-headers.adoc[]
+
+===== Path Parameter
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의를_상세_조회한다/path-parameters.adoc[]
+
+==== 요청
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의를_상세_조회한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의를_상세_조회한다/http-response.adoc[]
+
+===== 문의를 찾을 수 없는 경우
+include::{snippets}/admin-inquiry-controller-test/문의를_상세_조회할_때_문의가_없으면_예외가_발생한다/http-response.adoc[]
+
+=== 문의 상태 변경
+어드민은 문의의 상태를 변경할 수 있습니다.
+
+==== 요청 형식
+
+===== Request Header
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의의_상태를_변경한다/request-headers.adoc[]
+
+===== Path Parameter
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의의_상태를_변경한다/path-parameters.adoc[]
+
+===== Request Body
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의의_상태를_변경한다/request-fields.adoc[]
+
+==== 요청
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의의_상태를_변경한다/http-request.adoc[]
+
+==== 응답
+
+===== 정상 응답
+include::{snippets}/admin-inquiry-controller-test/어드민이_문의의_상태를_변경한다/http-response.adoc[]

@@ -27,4 +27,6 @@ include::letter.adoc[]
 
 include::question.adoc[]
 
+include::inquiry.adoc[]
+
 include::enum.adoc[]
