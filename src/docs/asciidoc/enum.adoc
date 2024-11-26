@@ -11,3 +11,6 @@ include::{snippets}/enum-controller-test/enums/custom-response-fields-emotionCat
 
 [[character-type]]
 include::{snippets}/enum-controller-test/enums/custom-response-fields-characterType.adoc[]
+
+[[inquiry-status]]
+include::{snippets}/enum-controller-test/enums/custom-response-fields-inquiryStatus.adoc[]

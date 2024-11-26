@@ -1,5 +1,9 @@
 package com.bamdoliro.sinabro.shared.response;
 
+import com.bamdoliro.sinabro.domain.character.domain.type.CharacterType;
+import com.bamdoliro.sinabro.domain.diary.domain.type.Emotion;
+import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
+import com.bamdoliro.sinabro.domain.user.domain.type.Authority;
 import com.bamdoliro.sinabro.shared.util.CustomResponseFieldsSnippet;
 import com.bamdoliro.sinabro.shared.util.RestDocsTestSupport;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -38,22 +42,27 @@ public class EnumControllerTest extends RestDocsTestSupport {
                         customResponseFields("custom-response",
                                 beneathPath("authority").withSubsectionId("authority"),
                                 attributes(key("title").value("Authority")),
-                                enumConvertFieldDescriptor((enumDocs.getAuthority()))
+                                enumConvertFieldDescriptor(enumDocs.getAuthority(), Authority.class)
                         ),
                         customResponseFields("custom-response",
                                 beneathPath("emotion").withSubsectionId("emotion"),
                                 attributes(key("title").value("Emotion")),
-                                enumConvertFieldDescriptor((enumDocs.getEmotion()))
+                                enumConvertFieldDescriptor(enumDocs.getEmotion(), Emotion.class)
                         ),
                         customResponseFields("custom-response",
                                 beneathPath("emotionCategory").withSubsectionId("emotionCategory"),
                                 attributes(key("title").value("EmotionCategory")),
-                                enumConvertFieldDescriptor((enumDocs.getEmotionCategory()))
+                                enumConvertFieldDescriptor(enumDocs.getEmotionCategory(), Emotion.Category.class)
                         ),
                         customResponseFields("custom-response",
                                 beneathPath("characterType").withSubsectionId("characterType"),
                                 attributes(key("title").value("CharacterType")),
-                                enumConvertFieldDescriptor((enumDocs.getCharacterType()))
+                                enumConvertFieldDescriptor(enumDocs.getCharacterType(), CharacterType.class)
+                        ),
+                        customResponseFields("custom-response",
+                                beneathPath("inquiryStatus").withSubsectionId("inquiryStatus"),
+                                attributes(key("title").value("InquiryStatus")),
+                                enumConvertFieldDescriptor(enumDocs.getInquiryStatus(), InquiryStatus.class)
                         )
                 ));
     }
@@ -66,10 +75,10 @@ public class EnumControllerTest extends RestDocsTestSupport {
                 , true);
     }
 
-    private static FieldDescriptor[] enumConvertFieldDescriptor(Map<String, String> enumValues) {
-        return enumValues.entrySet().stream()
-                .map(x -> fieldWithPath(x.getKey())
-                .description(x.getValue()))
+    private static <E extends Enum<E>> FieldDescriptor[] enumConvertFieldDescriptor(Map<String, String> enumValues, Class<E> enumType) {
+        return Arrays.stream(enumType.getEnumConstants()) // Enum 선언 순서를 유지
+                .map(enumConstant -> fieldWithPath(enumConstant.name())
+                        .description(enumValues.get(enumConstant.name())))
                 .toArray(FieldDescriptor[]::new);
     }
 
