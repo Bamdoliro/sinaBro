@@ -240,30 +240,6 @@ class UserInquiryControllerTest extends RestDocsTestSupport {
     }
 
     @Test
-    void 문의를_수정할_때_문의의_상태가_진행중이거나_완료라면_예외가_발생한다() throws Exception {
-        User user = UserFixture.createUser();
-        Long inquiryId = 1L;
-        InquiryRequest request = InquiryFixture.createInquiryRequest();
-
-        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
-        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
-        willThrow(new InvalidInquiryStateException()).given(updateInquiryUseCase).execute(any(User.class), anyLong(), any(InquiryRequest.class));
-
-        mockMvc.perform(put("/user/inquiries/{inquiry-id}", inquiryId)
-                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(request))
-                )
-
-                .andExpect(status().isConflict())
-
-                .andDo(restDocs.document());
-
-        verify(updateInquiryUseCase, times(1)).execute(any(User.class), anyLong(), any(InquiryRequest.class));
-    }
-
-    @Test
     void 문의를_수정할_때_본인의_문의가_아니면_예외가_발생한다() throws Exception {
         User user = UserFixture.createUser();
         Long inquiryId = 1L;
@@ -281,6 +257,30 @@ class UserInquiryControllerTest extends RestDocsTestSupport {
                 )
 
                 .andExpect(status().isForbidden())
+
+                .andDo(restDocs.document());
+
+        verify(updateInquiryUseCase, times(1)).execute(any(User.class), anyLong(), any(InquiryRequest.class));
+    }
+
+    @Test
+    void 문의를_수정할_때_문의의_상태가_진행중이거나_완료라면_예외가_발생한다() throws Exception {
+        User user = UserFixture.createUser();
+        Long inquiryId = 1L;
+        InquiryRequest request = InquiryFixture.createInquiryRequest();
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willThrow(new InvalidInquiryStateException()).given(updateInquiryUseCase).execute(any(User.class), anyLong(), any(InquiryRequest.class));
+
+        mockMvc.perform(put("/user/inquiries/{inquiry-id}", inquiryId)
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(request))
+                )
+
+                .andExpect(status().isConflict())
 
                 .andDo(restDocs.document());
 
@@ -339,27 +339,6 @@ class UserInquiryControllerTest extends RestDocsTestSupport {
     }
 
     @Test
-    void 문의를_삭제할_때_문의의_상태가_진행중이거나_완료라면_예외가_발생한다() throws Exception {
-        User user = UserFixture.createUser();
-        Long inquiryId = 1L;
-
-        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
-        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
-        willThrow(new InvalidInquiryStateException()).given(deleteInquiryUseCase).execute(user, inquiryId);
-
-        mockMvc.perform(delete("/user/inquiries/{inquiry-id}", inquiryId)
-                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
-
-                .andExpect(status().isConflict())
-
-                .andDo(restDocs.document());
-
-        verify(deleteInquiryUseCase, times(1)).execute(user, inquiryId);
-    }
-
-    @Test
     void 문의를_삭제할_때_본인의_문의가_아니면_예외가_발생한다() throws Exception {
         User user = UserFixture.createUser();
         Long inquiryId = 1L;
@@ -375,6 +354,27 @@ class UserInquiryControllerTest extends RestDocsTestSupport {
                 )
 
                 .andExpect(status().isForbidden())
+
+                .andDo(restDocs.document());
+
+        verify(deleteInquiryUseCase, times(1)).execute(user, inquiryId);
+    }
+
+    @Test
+    void 문의를_삭제할_때_문의의_상태가_진행중이거나_완료라면_예외가_발생한다() throws Exception {
+        User user = UserFixture.createUser();
+        Long inquiryId = 1L;
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willThrow(new InvalidInquiryStateException()).given(deleteInquiryUseCase).execute(user, inquiryId);
+
+        mockMvc.perform(delete("/user/inquiries/{inquiry-id}", inquiryId)
+                        .header(HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                .andExpect(status().isConflict())
 
                 .andDo(restDocs.document());
 

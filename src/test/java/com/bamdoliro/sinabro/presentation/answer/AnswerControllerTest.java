@@ -1,6 +1,7 @@
 package com.bamdoliro.sinabro.presentation.answer;
 
 import com.bamdoliro.sinabro.domain.answer.exception.AnswerNotFoundException;
+import com.bamdoliro.sinabro.domain.auth.exception.AuthorityMismatchException;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.answer.dto.request.AnswerRequest;
 import com.bamdoliro.sinabro.shared.fixture.AnswerFixture;
@@ -128,6 +129,30 @@ class AnswerControllerTest extends RestDocsTestSupport {
     }
 
     @Test
+    void 답변을_수정할_때_본인의_답변이_아니면_예외가_발생한다() throws Exception {
+        User user = UserFixture.createUser();
+        Long inquiryId = 1L;
+        AnswerRequest request = AnswerFixture.createAnswerRequest();
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willThrow(new AuthorityMismatchException()).given(updateAnswerUseCase).execute(any(User.class), anyLong(), any(AnswerRequest.class));
+
+        mockMvc.perform(put("/answers/{inquiry-id}", inquiryId)
+                        .header(org.apache.http.HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(request))
+                )
+
+                .andExpect(status().isForbidden())
+
+                .andDo(restDocs.document());
+
+        verify(updateAnswerUseCase, times(1)).execute(any(User.class), anyLong(), any(AnswerRequest.class));
+    }
+
+    @Test
     void 답변을_삭제한다() throws Exception {
         User user = UserFixture.createAdmin();
         Long answerId = 1L;
@@ -174,5 +199,27 @@ class AnswerControllerTest extends RestDocsTestSupport {
                 .andDo(restDocs.document());
 
         verify(deleteAnswerUseCase, times(1)).execute(any(User.class), anyLong());
+    }
+
+    @Test
+    void 답변을_삭제할_때_본인의_답변이_아니면_예외가_발생한다() throws Exception {
+        User user = UserFixture.createUser();
+        Long inquiryId = 1L;
+
+        given(authenticationArgumentResolver.supportsParameter(any(MethodParameter.class))).willReturn(true);
+        given(authenticationArgumentResolver.resolveArgument(any(), any(), any(), any())).willReturn(user);
+        willThrow(new AuthorityMismatchException()).given(deleteAnswerUseCase).execute(user, inquiryId);
+
+        mockMvc.perform(delete("/answers/{inquiry-id}", inquiryId)
+                        .header(org.apache.http.HttpHeaders.AUTHORIZATION, AuthFixture.createAuthHeader())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                .andExpect(status().isForbidden())
+
+                .andDo(restDocs.document());
+
+        verify(deleteAnswerUseCase, times(1)).execute(user, inquiryId);
     }
 }
