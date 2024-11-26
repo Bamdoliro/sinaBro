@@ -1,11 +1,18 @@
 package com.bamdoliro.sinabro.shared.util;
 
+import com.bamdoliro.sinabro.application.answer.CreateAnswerUseCase;
+import com.bamdoliro.sinabro.application.answer.DeleteAnswerUseCase;
+import com.bamdoliro.sinabro.application.answer.UpdateAnswerUseCase;
 import com.bamdoliro.sinabro.application.auth.*;
 import com.bamdoliro.sinabro.application.character.GetCharacterUseCase;
 import com.bamdoliro.sinabro.application.character.SelectCharacterUseCase;
 import com.bamdoliro.sinabro.application.diary.*;
 import com.bamdoliro.sinabro.application.fcm.token.DeleteFCMTokenUseCase;
 import com.bamdoliro.sinabro.application.fcm.token.SaveFCMTokenUseCase;
+import com.bamdoliro.sinabro.application.inquiry.admin.GetAllInquiriesAdminUseCase;
+import com.bamdoliro.sinabro.application.inquiry.admin.GetInquiryAdminUseCase;
+import com.bamdoliro.sinabro.application.inquiry.admin.UpdateInquiryStatusUseCase;
+import com.bamdoliro.sinabro.application.inquiry.user.*;
 import com.bamdoliro.sinabro.application.letter.GenerateLetterUseCase;
 import com.bamdoliro.sinabro.application.letter.GetAllLetterUseCase;
 import com.bamdoliro.sinabro.application.letter.GetLetterUseCase;
@@ -18,6 +25,8 @@ import com.bamdoliro.sinabro.presentation.auth.AuthController;
 import com.bamdoliro.sinabro.presentation.character.CharacterController;
 import com.bamdoliro.sinabro.presentation.diary.DiaryController;
 import com.bamdoliro.sinabro.presentation.fcm.token.FCMTokenController;
+import com.bamdoliro.sinabro.presentation.inquiry.admin.AdminInquiryController;
+import com.bamdoliro.sinabro.presentation.inquiry.user.UserInquiryController;
 import com.bamdoliro.sinabro.presentation.letter.LetterController;
 import com.bamdoliro.sinabro.presentation.notification.NotificationController;
 import com.bamdoliro.sinabro.presentation.question.QuestionController;
@@ -44,6 +53,8 @@ import org.springframework.test.web.servlet.MockMvc;
         CharacterController.class,
         QuestionController.class,
         LetterController.class,
+        UserInquiryController.class,
+        AdminInquiryController.class,
         SharedController.class
 })
 public abstract class ControllerTest {
@@ -137,6 +148,41 @@ public abstract class ControllerTest {
 
     @MockBean
     protected GetLetterUseCase getLetterUseCase;
+
+    // Inquiry
+    @MockBean
+    protected CreateInquiryUseCase createInquiryUseCase;
+
+    @MockBean
+    protected GetAllInquiriesUserUseCase getAllInquiriesUserUseCase;
+
+    @MockBean
+    protected GetInquiryUserUseCase getInquiryUserUseCase;
+
+    @MockBean
+    protected UpdateInquiryUseCase updateInquiryUseCase;
+
+    @MockBean
+    protected DeleteInquiryUseCase deleteInquiryUseCase;
+
+    @MockBean
+    protected GetAllInquiriesAdminUseCase getAllInquiriesAdminUseCase;
+
+    @MockBean
+    protected GetInquiryAdminUseCase getInquiryAdminUseCase;
+
+    @MockBean
+    protected UpdateInquiryStatusUseCase updateInquiryStatusUseCase;
+
+    // Answer
+    @MockBean
+    protected CreateAnswerUseCase createAnswerUseCase;
+
+    @MockBean
+    protected UpdateAnswerUseCase updateAnswerUseCase;
+
+    @MockBean
+    protected DeleteAnswerUseCase deleteAnswerUseCase;
 
     // Service
     @MockBean

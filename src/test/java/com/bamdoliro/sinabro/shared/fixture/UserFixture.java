@@ -10,6 +10,6 @@ public class UserFixture {
     }
 
     public static User createAdmin() {
-        return new User("bamdoliro@gmail.com", "어다민", Authority.ADMIN);
+        return new User("bamdoliro@gmail.com", "어드민", Authority.ADMIN);
     }
 }
