@@ -21,6 +21,7 @@ import com.bamdoliro.sinabro.application.notification.SendNotificationToAllUserU
 import com.bamdoliro.sinabro.application.notification.SendNotificationUseCase;
 import com.bamdoliro.sinabro.application.question.*;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
+import com.bamdoliro.sinabro.presentation.answer.AnswerController;
 import com.bamdoliro.sinabro.presentation.auth.AuthController;
 import com.bamdoliro.sinabro.presentation.character.CharacterController;
 import com.bamdoliro.sinabro.presentation.diary.DiaryController;
@@ -55,6 +56,7 @@ import org.springframework.test.web.servlet.MockMvc;
         LetterController.class,
         UserInquiryController.class,
         AdminInquiryController.class,
+        AnswerController.class,
         SharedController.class
 })
 public abstract class ControllerTest {
