@@ -23,7 +23,11 @@ public class GoogleAuthService {
 
         if (user.isEmpty()) {
             userRepository.save(
-                    new User(email, information.getName(), Authority.USER)
+                    User.builder()
+                            .email(email)
+                            .name(information.getName())
+                            .authority(Authority.USER)
+                            .build()
             );
         }
 
