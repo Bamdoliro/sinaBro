@@ -20,6 +20,9 @@ import com.bamdoliro.sinabro.application.notification.QueryNotificationListUseCa
 import com.bamdoliro.sinabro.application.notification.SendNotificationToAllUserUseCase;
 import com.bamdoliro.sinabro.application.notification.SendNotificationUseCase;
 import com.bamdoliro.sinabro.application.question.*;
+import com.bamdoliro.sinabro.application.user.SendVerificationUseCase;
+import com.bamdoliro.sinabro.application.user.SignUpUseCase;
+import com.bamdoliro.sinabro.application.user.VerifyUseCase;
 import com.bamdoliro.sinabro.domain.auth.service.TokenService;
 import com.bamdoliro.sinabro.presentation.answer.AnswerController;
 import com.bamdoliro.sinabro.presentation.auth.AuthController;
@@ -72,6 +75,9 @@ public abstract class ControllerTest {
 
     // Auth
     @MockBean
+    protected LogInUseCase logInUseCase;
+
+    @MockBean
     protected GoogleAuthLinkUseCase googleAuthLinkUseCase;
 
     @MockBean
@@ -85,6 +91,16 @@ public abstract class ControllerTest {
 
     @MockBean
     protected LogOutUseCase logOutUseCase;
+
+    // User
+    @MockBean
+    protected SignUpUseCase signUpUseCase;
+
+    @MockBean
+    protected SendVerificationUseCase sendVerificationUseCase;
+
+    @MockBean
+    protected VerifyUseCase verifyUseCase;
 
     // Diary
     @MockBean

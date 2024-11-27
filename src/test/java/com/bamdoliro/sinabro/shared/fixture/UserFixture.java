@@ -6,10 +6,18 @@ import com.bamdoliro.sinabro.domain.user.domain.type.Authority;
 public class UserFixture {
 
     public static User createUser() {
-        return new User("bamdoliro@gmail.com", "김밤돌", Authority.USER);
+        return User.builder()
+                .email("bamdoliro@gmail.com")
+                .name("김밤돌")
+                .authority(Authority.USER)
+                .build();
     }
 
     public static User createAdmin() {
-        return new User("bamdoliro@gmail.com", "어드민", Authority.ADMIN);
+        return User.builder()
+                .email("bamdoliro@gmail.com")
+                .name("어드민")
+                .authority(Authority.ADMIN)
+                .build();
     }
 }
