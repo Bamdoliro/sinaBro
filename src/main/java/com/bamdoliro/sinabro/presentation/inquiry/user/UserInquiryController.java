@@ -1,0 +1,78 @@
+package com.bamdoliro.sinabro.presentation.inquiry.user;
+
+import com.bamdoliro.sinabro.application.inquiry.user.*;
+import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
+import com.bamdoliro.sinabro.domain.user.domain.User;
+import com.bamdoliro.sinabro.presentation.inquiry.user.dto.request.InquiryRequest;
+import com.bamdoliro.sinabro.presentation.inquiry.user.dto.response.InquiryUserResponse;
+import com.bamdoliro.sinabro.presentation.inquiry.user.dto.response.ListInquiryUserResponse;
+import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
+import com.bamdoliro.sinabro.shared.auth.Authority;
+import com.bamdoliro.sinabro.shared.response.CommonResponse;
+import com.bamdoliro.sinabro.shared.response.IdResponse;
+import com.bamdoliro.sinabro.shared.response.ListCommonResponse;
+import com.bamdoliro.sinabro.shared.response.SingleCommonResponse;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RequiredArgsConstructor
+@RequestMapping("/user/inquiries")
+@RestController
+public class UserInquiryController {
+
+    private final CreateInquiryUseCase createInquiryUseCase;
+    private final GetAllInquiriesUserUseCase getAllInquiriesUserUseCase;
+    private final GetInquiryUserUseCase getInquiryUserUseCase;
+    private final UpdateInquiryUseCase updateInquiryUseCase;
+    private final DeleteInquiryUseCase deleteInquiryUseCase;
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public IdResponse createInquiry(
+            @AuthenticationPrincipal(authority = Authority.USER) User user,
+            @RequestBody @Valid InquiryRequest request
+    ) {
+        return createInquiryUseCase.execute(user, request);
+    }
+
+    @GetMapping
+    public ListCommonResponse<ListInquiryUserResponse> getAllInquiries(
+            @AuthenticationPrincipal(authority = Authority.USER) User user,
+            @RequestParam(required = false) InquiryStatus status
+    ) {
+        return CommonResponse.ok(
+                getAllInquiriesUserUseCase.execute(user, status)
+        );
+    }
+
+    @GetMapping("/{inquiry-id}")
+    public SingleCommonResponse<InquiryUserResponse> getInquiry(
+            @AuthenticationPrincipal(authority = Authority.USER) User user,
+            @PathVariable(name = "inquiry-id") Long inquiryId
+    ) {
+        return CommonResponse.ok(
+                getInquiryUserUseCase.execute(user, inquiryId)
+        );
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{inquiry-id}")
+    public void updateInquiry(
+            @AuthenticationPrincipal(authority = Authority.USER) User user,
+            @PathVariable(name = "inquiry-id") Long inquiryId,
+            @RequestBody @Valid InquiryRequest request
+    ) {
+        updateInquiryUseCase.execute(user, inquiryId, request);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{inquiry-id}")
+    public void deleteInquiry(
+            @AuthenticationPrincipal(authority = Authority.USER) User user,
+            @PathVariable(name = "inquiry-id") Long inquiryId
+    ) {
+        deleteInquiryUseCase.execute(user, inquiryId);
+    }
+}

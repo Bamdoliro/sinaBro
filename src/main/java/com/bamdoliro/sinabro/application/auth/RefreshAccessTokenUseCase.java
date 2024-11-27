@@ -42,7 +42,7 @@ public class RefreshAccessTokenUseCase {
     private Token getToken(String refreshToken) {
         String id = tokenService.getId(refreshToken);
         Token token = tokenRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(ExpiredTokenException::new);
         validate(refreshToken, token.getToken());
 
         return token;

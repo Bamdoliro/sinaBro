@@ -1,7 +1,8 @@
 package com.bamdoliro.sinabro.shared.response;
 
-import com.bamdoliro.sinabro.domain.diary.domain.type.Emotion;
 import com.bamdoliro.sinabro.domain.character.domain.type.CharacterType;
+import com.bamdoliro.sinabro.domain.diary.domain.type.Emotion;
+import com.bamdoliro.sinabro.domain.inquiry.domain.type.InquiryStatus;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.domain.user.domain.type.Authority;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
@@ -27,6 +28,7 @@ public class SharedController {
                 .emotion(getDocs(Emotion.values()))
                 .emotionCategory(getDocs(Emotion.Category.values()))
                 .characterType(getDocs(CharacterType.values()))
+                .inquiryStatus(getDocs(InquiryStatus.values()))
                 .build();
     }
 
