@@ -3,6 +3,7 @@ package com.bamdoliro.sinabro.presentation.auth;
 import com.bamdoliro.sinabro.application.auth.*;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.presentation.auth.dto.request.GoogleTokenRequest;
+import com.bamdoliro.sinabro.presentation.auth.dto.request.LogInRequest;
 import com.bamdoliro.sinabro.presentation.auth.dto.response.TokenResponse;
 import com.bamdoliro.sinabro.shared.auth.AuthenticationPrincipal;
 import com.bamdoliro.sinabro.shared.response.CommonResponse;
@@ -23,6 +24,16 @@ public class AuthController {
     private final LogOutUseCase logOutUseCase;
     private final GoogleAuthWebUseCase googleAuthWebUseCase;
     private final GoogleAuthAppUseCase googleAuthAppUseCase;
+    private final LogInUseCase logInUseCase;
+
+    @PostMapping
+    public SingleCommonResponse<TokenResponse> logIn(
+            @RequestBody @Valid LogInRequest request
+    ) {
+        return CommonResponse.ok(
+                logInUseCase.execute(request)
+        );
+    }
 
     @GetMapping("/google/web/link")
     public SingleCommonResponse<String> getGoogleAuthUrl() {
