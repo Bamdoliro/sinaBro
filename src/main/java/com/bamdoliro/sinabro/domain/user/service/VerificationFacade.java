@@ -1,8 +1,8 @@
 package com.bamdoliro.sinabro.domain.user.service;
 
-import com.bamdoliro.sinabro.domain.user.domain.SignUpVerification;
+import com.bamdoliro.sinabro.domain.user.domain.Verification;
 import com.bamdoliro.sinabro.domain.user.exception.VerifyingHasFailedException;
-import com.bamdoliro.sinabro.infrastructure.persistence.user.SignUpVerificationRepository;
+import com.bamdoliro.sinabro.infrastructure.persistence.user.VerificationRepository;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 @UseCase
 public class VerificationFacade {
 
-    private final SignUpVerificationRepository signUpVerificationRepository;
+    private final VerificationRepository verificationRepository;
 
     @Transactional(readOnly = true)
-    public SignUpVerification getVerification(String id) {
-        return signUpVerificationRepository.findById(id)
+    public Verification getVerification(String id) {
+        return verificationRepository.findById(id)
                 .orElseThrow(VerifyingHasFailedException::new);
     }
 }

@@ -1,6 +1,6 @@
 package com.bamdoliro.sinabro.infrastructure.persistence.user;
 
-import com.bamdoliro.sinabro.domain.user.domain.SignUpVerification;
+import com.bamdoliro.sinabro.domain.user.domain.Verification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.PartialUpdate;
 import org.springframework.data.redis.core.RedisKeyValueTemplate;
@@ -14,7 +14,7 @@ public class VerificationRedisRepositoryImpl implements VerificationRedisReposit
 
     @Override
     public void updateSignUpVerification(String email, boolean verified) {
-        PartialUpdate<SignUpVerification> update = new PartialUpdate<>(email, SignUpVerification.class)
+        PartialUpdate<Verification> update = new PartialUpdate<>(email, Verification.class)
                 .set("isVerified", verified)
                 .refreshTtl(true);
 

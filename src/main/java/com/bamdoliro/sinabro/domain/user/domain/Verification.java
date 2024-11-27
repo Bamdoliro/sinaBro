@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisHash;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @RedisHash(value = "signup-verification", timeToLive = 60 * 5)
-public class SignUpVerification {
+public class Verification {
 
     @Id
     private String email;
@@ -19,7 +19,7 @@ public class SignUpVerification {
 
     private Boolean isVerified;
 
-    public SignUpVerification(String email) {
+    public Verification(String email) {
         this.email = email;
         this.code = RandomCodeUtil.generate(6);
         this.isVerified = false;

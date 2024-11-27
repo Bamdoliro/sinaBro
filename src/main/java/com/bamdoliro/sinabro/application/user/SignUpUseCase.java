@@ -1,10 +1,10 @@
 package com.bamdoliro.sinabro.application.user;
 
-import com.bamdoliro.sinabro.domain.user.domain.SignUpVerification;
 import com.bamdoliro.sinabro.domain.user.domain.User;
+import com.bamdoliro.sinabro.domain.user.domain.Verification;
 import com.bamdoliro.sinabro.domain.user.domain.type.Authority;
-import com.bamdoliro.sinabro.infrastructure.persistence.user.SignUpVerificationRepository;
 import com.bamdoliro.sinabro.infrastructure.persistence.user.UserRepository;
+import com.bamdoliro.sinabro.infrastructure.persistence.user.VerificationRepository;
 import com.bamdoliro.sinabro.presentation.user.dto.request.SignUpRequest;
 import com.bamdoliro.sinabro.shared.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SignUpUseCase {
 
     private final UserRepository userRepository;
-    private final SignUpVerificationRepository signUpVerificationRepository;
+    private final VerificationRepository verificationRepository;
 
     @Transactional
     public void execute(SignUpRequest request) {
@@ -32,10 +32,10 @@ public class SignUpUseCase {
     }
 
     private void validate(SignUpRequest request) {
-        SignUpVerification signUpVerification = signUpVerificationRepository.findById(request.getEmail())
+        Verification verification = verificationRepository.findById(request.getEmail())
                 .orElseThrow(RuntimeException::new);
 
-        if (!signUpVerification.getIsVerified()) {
+        if (!verification.getIsVerified()) {
             throw new RuntimeException();
         }
 
@@ -43,6 +43,6 @@ public class SignUpUseCase {
             throw new RuntimeException();
         }
 
-        signUpVerificationRepository.delete(signUpVerification);
+        verificationRepository.delete(verification);
     }
 }
