@@ -19,8 +19,6 @@ public class VerifyUseCase {
     @Transactional
     public void execute(VerifyRequest request) {
         Verification verification = verificationFacade.getVerification(request.getEmail());
-        System.out.println(request.getCode());
-        System.out.println(verification.getCode());
 
         if (!verification.getCode().equals(request.getCode())) {
             throw new VerificationCodeMismatchException();
