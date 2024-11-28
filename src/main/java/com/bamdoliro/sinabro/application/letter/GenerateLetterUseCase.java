@@ -2,6 +2,7 @@ package com.bamdoliro.sinabro.application.letter;
 
 import com.bamdoliro.sinabro.domain.character.domain.Character;
 import com.bamdoliro.sinabro.domain.character.service.CharacterFacade;
+import com.bamdoliro.sinabro.domain.diary.service.DiaryFacade;
 import com.bamdoliro.sinabro.domain.letter.domain.Letter;
 import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.ai.AIService;
@@ -14,7 +15,6 @@ import com.bamdoliro.sinabro.shared.response.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,6 +25,7 @@ public class GenerateLetterUseCase {
     private final DiaryRepository diaryRepository;
     private final AIService aiService;
     private final CharacterFacade characterFacade;
+    private final DiaryFacade diaryFacade;
 
     @Transactional
     public IdResponse execute(User user) {
@@ -40,9 +41,13 @@ public class GenerateLetterUseCase {
     }
 
     private List<EmotionAndKeyword> extractEmotionAndKeywords(User user) {
-        return diaryRepository.findAllByAuthorAndWrittenAtAfter(user, LocalDate.now().minusWeeks(1))
-                .stream()
-                .map(EmotionAndKeyword::new)
-                .toList();
+//        return diaryRepository.findAllByAuthorAndWrittenAtAfter(user, LocalDate.now().minusWeeks(1))
+//                .stream()
+//                .map(EmotionAndKeyword::new)
+//                .toList();
+
+        return List.of(
+                new EmotionAndKeyword(diaryFacade.getCurrentDiary(user))
+        );
     }
 }

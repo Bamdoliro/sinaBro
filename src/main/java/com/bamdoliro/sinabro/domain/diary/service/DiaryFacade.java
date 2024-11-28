@@ -2,6 +2,7 @@ package com.bamdoliro.sinabro.domain.diary.service;
 
 import com.bamdoliro.sinabro.domain.diary.domain.Diary;
 import com.bamdoliro.sinabro.domain.diary.exception.DiaryNotFoundException;
+import com.bamdoliro.sinabro.domain.user.domain.User;
 import com.bamdoliro.sinabro.infrastructure.persistence.diary.DiaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,11 @@ public class DiaryFacade {
     @Transactional(readOnly = true)
     public Diary getDiary(Long id) {
         return diaryRepository.findById(id)
+                .orElseThrow(DiaryNotFoundException::new);
+    }
+
+    public Diary getCurrentDiary(User user) {
+        return diaryRepository.findTopByAuthorOrderByWrittenAtDesc(user)
                 .orElseThrow(DiaryNotFoundException::new);
     }
 }

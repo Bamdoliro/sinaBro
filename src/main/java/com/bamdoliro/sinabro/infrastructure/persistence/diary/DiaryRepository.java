@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
@@ -16,6 +17,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     List<Diary> findAllByAuthorAndWrittenAtBefore(User author, LocalDate writtenAtBefore);
 
     List<Diary> findAllByAuthor(User author);
+
+    Optional<Diary> findTopByAuthorOrderByWrittenAtDesc(User author);
 
     boolean existsByAuthorAndWrittenAt(User author, LocalDate writtenAt);
 }
